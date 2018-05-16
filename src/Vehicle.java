@@ -1,12 +1,12 @@
 public interface Vehicle
 { 
  void move(int spaces, String direction);
-{
+
 /**
  * @param spaces Vehicle object will move
  * @see Truck and Car classes
  */
- void move(int spaces);
+// void move(int spaces); Too lazy to take care of this method right now
 
  int getX(); 
 
