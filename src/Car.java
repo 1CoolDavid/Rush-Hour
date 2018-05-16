@@ -9,18 +9,19 @@ public class Car implements Vehicle
   this.Y = Y;
   size = 2;
  }
+
+ public void setSize(int s){ size = s; }
  
  public int getX()
  {
   return X;
  }
  
- public getY()
+ public int getY()
  {
   return Y;
  }
 
- //Need collision detection 
  public void move(int spaces, String direction)
  {
   switch(direction)
@@ -28,7 +29,7 @@ public class Car implements Vehicle
    case "FORWARD":
     Y += spaces;
     break;
-   case "BACKWARD":	
+   case "BACKWARD":
     Y -= spaces;
     break;
    case "UP":
@@ -38,7 +39,7 @@ public class Car implements Vehicle
     X += spaces;
     break;
    default:
-   // System.out.println("Not a valid direction"); 
+    //System.out.println("Not a valid direction");
   }
  } 
 }

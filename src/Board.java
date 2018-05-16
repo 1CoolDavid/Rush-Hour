@@ -23,7 +23,18 @@ public class Board {
 	public void init(){
 		manyCars = getDimensions();
 		int limit = manyCars/2; //may be for car size creation
-		
+		for(int c = 0; c < 5; c ++){
+			int size = (int)(Math.random()*limit + 1);
+			int posx = (int)(Math.random()*(manyCars+1));
+            int posy = (int)(Math.random()*(manyCars+1));
+            if(size == 2) {
+                Car a = new Car(posx, posy);
+                a.setSize(size);
+            }
+            else {
+                //truck init
+            }
+		}
 		//incorporate car creation later
 	}
 	public void init(int a){
