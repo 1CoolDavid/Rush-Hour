@@ -1,5 +1,5 @@
 public class Car implements Vehicle
-{
+{ //Fix x and y
  private int size;
  private int X;
  private int Y;
