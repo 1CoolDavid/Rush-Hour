@@ -63,11 +63,11 @@ public class Truck implements Vehicle
  {
   if(direction.equals("Vertical"))
   {
-    y+=spaces;
+    Y+=spaces;
   }
   else //"Horizontal"
   {
-    x+=spaces;
+    X+=spaces;
   }
   
  }

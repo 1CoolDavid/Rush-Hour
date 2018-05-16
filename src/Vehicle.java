@@ -6,4 +6,12 @@ public interface Vehicle
  */
  void move(int spaces);
 
+ int getX();
+
+ int getY();
+
+ String getDirection();
+
+ int getSize();
+
 }

@@ -63,11 +63,11 @@ public class Car implements Vehicle
  {
   if(direction.equals("VERTICAL")) //Now checks string
   {
-    y+=spaces;
+    Y+=spaces;
   }
   else //"HORIZONTAL"
   {
-    x+=spaces;
+    X+=spaces;
   }
  }
 }

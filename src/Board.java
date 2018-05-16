@@ -35,13 +35,13 @@ public class Board {
 	 * @return boolean: true if has valid coordinates, false otherwise
 	 * @see public void place(Vehicle v){...} for usage
 	 */
-	public boolean isntTaken(Vehicle aVehicle)
+	public boolean isntTaken(Car a)
 	{
-		int x = aVehicle.getX();
-		int y = aVehicle.getY();
-		if(aVehicle.getDirection().equals("VERTICAL"))
+		int x = a.getX();
+		int y = a.getY();
+		if(a.getDirection().equals("VERTICAL"))
 		{
-			for(int i = y; i<aVehicle.getSize(); i++)
+			for(int i = y; i<a.getSize(); i++)
 			{
 			   if(b[i][x] == true)
 				return false;
@@ -49,7 +49,32 @@ public class Board {
 			return true;
 		}
 		else{
-			for(int i = x; i<aVehicle.getSize(); i++)
+			for(int i = x; i<a.getSize(); i++)
+			{
+				if(b[y][i] == true){
+					return false;
+				}
+			}
+			return true;
+		}
+			
+	}
+
+	public boolean isntTaken(Truck t)
+	{
+		int x = t.getX();
+		int y = t.getY();
+		if(t.getDirection().equals("VERTICAL"))
+		{
+			for(int i = y; i<t.getSize(); i++)
+			{
+			   if(b[i][x] == true)
+				return false;
+			}
+			return true;
+		}
+		else{
+			for(int i = x; i<t.getSize(); i++)
 			{
 				if(b[y][i] == true){
 					return false;
@@ -62,27 +87,49 @@ public class Board {
 	
 	/**
 	 * Places vehicle in board 2DArray after verifying coordinates (sets coordinates to true)
-	 * @param Truck/Vehicle
+	 * @param Car
 	 * @see public void init(){...} for usage 
 	 */
-	public void place(Vehicle v)
+	public void place(Car a)
 	{
-		if(!isntTaken(v))
+		if(!isntTaken(a))
 		{
 			return;           
 		}
-		if(v.getDirection().equals("VERTICAL"))
+		if(a.getDirection().equals("VERTICAL"))
 		{
-			for(int i = v.getY(); i < v.getSize(); i++)
+			for(int i = a.getY(); i < a.getSize(); i++)
 			{
-				b[i][v.getX()] = true; 		   	
+				b[i][a.getX()] = true; 		   	
 			}
 		}
 		else
 		{	
-			for(int i = v.getX(); i < v.getSize(); i++)
+			for(int i = a.getX(); i < a.getSize(); i++)
 			{
-				b[v.getY()][i] = true;
+				b[a.getY()][i] = true;
+			}
+		}
+	}
+
+	public void place(Truck t)
+	{
+		if(!isntTaken(t))
+		{
+			return;           
+		}
+		if(t.getDirection().equals("VERTICAL"))
+		{
+			for(int i = t.getY(); i < t.getSize(); i++)
+			{
+				b[i][t.getX()] = true; 		   	
+			}
+		}
+		else
+		{	
+			for(int i = t.getX(); i < t.getSize(); i++)
+			{
+				b[t.getY()][i] = true;
 			}
 		}
 	}
@@ -97,10 +144,10 @@ public class Board {
 		manyCars = getDimensions();
 		for(int c = 0; c < 5; c ++){
 			//creates random coordinates and size
-			int size = (int)(Math.random()*limit + 1);
+			int size = (int)(Math.random()*2); //0 or 1
 			int posx = (int)(Math.random()*(manyCars+1));
             int posy = (int)(Math.random()*(manyCars+1));
-            if(size <= 2) {
+            if(size == 0) {
                 Car a = new Car(posx, posy);
                 vehicles.add(a);
             }
@@ -116,14 +163,20 @@ public class Board {
 			{
 				if(v.getY() >= 0 && v.getY() < manyCars - 1)
 				{
-					place(v);
+					if(v.getClass().getSimpleName().equals("Car"))
+					   place((Car)v);
+					else
+					   place((Truck)v);
 				}	
 			}
 			else
 			{
 				if(v.getX() >= 0 && v.getX() < manyCars - 1)
 				{
-					place(v);
+					if(v.getClass().getSimpleName().equals("Car"))
+						place((Car)v);
+					else
+						place((Truck)v);
 				}
 			}
 			   
