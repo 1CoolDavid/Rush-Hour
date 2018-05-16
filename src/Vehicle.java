@@ -8,7 +8,7 @@ public interface Vehicle
  */
  void move(int spaces);
 
- int getX(); //javadoc here?
+ int getX(); 
 
  int getY();
 

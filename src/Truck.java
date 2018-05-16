@@ -1,6 +1,5 @@
 public class Truck implements Vehicle
 {
- //change logs
  private int size;
  private int X;
  private int Y;
