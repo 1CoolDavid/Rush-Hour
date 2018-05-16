@@ -1,9 +1,9 @@
 public interface Vehicle
-<<<<<<< HEAD
-{ 
-=======
 {
+/**
+ * @param spaces Vehicle object will move
+ * @see Truck and Car classes
+ */
+ void move(int spaces);
 
->>>>>>> dc9ecd0377c13e2d93f49a692cd21604d91f48b3
- void move(int spaces, String direction);
 }
