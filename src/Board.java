@@ -30,12 +30,11 @@ public class Board {
 	}
 
 	/**
-	 * 
-	 * Checks if all coordinates of object Vehicle is valid
-	 * @param Car
-	 * @return boolean: true if has valid coordinates, false otherwise
-	 * @see public void place(Vehicle v){...} for usage
-	 */
+	 * Checks coordinates of object
+	 * True if has valid coordinates, false otherwise
+	 * @param Car a
+	 * @return boolean 
+    */
 	public boolean isntTaken(Car a)
 	{
 		int x = a.getX();
@@ -63,7 +62,7 @@ public class Board {
 
 	/**
 	 * Checks if all coordinates of object Vehicle is valid
-	 * @param t Truck
+	 * @param Truck t
 	 * @return boolean: true if has valid coordinates, false otherwise
 	 * @see public void place(Vehicle v){...} for usage
 	 */
@@ -94,7 +93,7 @@ public class Board {
 	
 	/** 
 	 * Places vehicle in board 2DArray after verifying coordinates (sets coordinates to true)
-	 * @param a car
+	 * @param Car a
 	 * @see public void init(){...} for usage 
 	 */
 	public void place(Car a)
@@ -121,7 +120,7 @@ public class Board {
 
 	/**
 	 * Places vehicle in board 2DArray after verifying coordinates (sets coordinates to true)
-	 * @param t truck
+	 * @param Truck t
 	 * @see public void init(){...} for usage
 	 *
 	 */
