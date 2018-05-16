@@ -21,24 +21,24 @@ public class Car implements Vehicle
  }
 
  //Need collision detection 
- public void move(int spaces, Direction d)
+ public void move(int spaces, String direction)
  {
-  switch(d)
+  switch(direction)
   {
-   case FORWARD:
+   case "FORWARD":
     Y += spaces;
     break;
-   case BACKWARD:	
+   case "BACKWARD":	
     Y -= spaces;
     break;
-   case UP:
+   case "UP":
     X -= spaces;
     break;
-   case DOWN:
+   case "DOWN":
     X += spaces;
     break;
    default:
-    System.out.println("Not a valid direction"); 
+   // System.out.println("Not a valid direction"); 
   }
  } 
 }
