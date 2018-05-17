@@ -144,7 +144,8 @@ public class Board {
 	}
 
 	public void initRandom(int a){
-		for(int i = 0; i<a; i++)
+		int i = 0;
+		while(i<a)
 		{
 			int choose = (int)(Math.random()*2);
 			if(choose == 0)
@@ -156,7 +157,8 @@ public class Board {
 				while(x == 3 && addition.getDirection().equals("HORIZONTAL"))
 					x = (int)(Math.random()*getDimensions());
 				addition = new Car(x,y);	
-				add(addition);
+				if(add(addition))
+					i++;
 			}
 			else
 			{
@@ -167,7 +169,8 @@ public class Board {
 				while(x == 3 && addition.getDirection().equals("HORIZONTAL"))
 					x = (int)(Math.random()*getDimensions());
 				addition = new Truck(x,y);
-				add(addition);
+				if(add(addition))
+					i++;
 			}
 		}
 	}
