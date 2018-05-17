@@ -5,7 +5,8 @@ public class Board {
 	private ArrayList<Vehicle> vehicles;
 	private Car redCar;
 	private int manyCars;
-	
+        private final int XGOAL = 3;
+        private final int YGOAL = 3;	
 	public Board() {
 		b = new boolean[6][6]; //standard board size 6x6
 		vehicles = new ArrayList<Vehicle>();
@@ -44,17 +45,16 @@ public class Board {
 		int y = a.getY();
 		if(a.getDirection().equals("VERTICAL"))
 		{
-<<<<<<< HEAD
 			for(int i = y; i<a.getSize(); i++) 
-=======
-			for(int i = 0; i<a.getSize(); i++)
->>>>>>> 7828fdc4ac7f0bb050abd0f70525ce7b1dafed3c
+                       {
+			for(int j = 0; j<a.getSize(); j++)
 			{
-			   if(b[y+i][x] == true)
+			   if(b[y+j][x] == true)
 				return false;
 			}
+                       }
 			return true;
-		}
+	       	}
 		else{
 			for(int i = 0; i<a.getSize(); i++)
 			{
