@@ -25,29 +25,6 @@ public class Board {
 	{
 		return b.length;
 	}
-	public void print()
-	{
-	   for(int i = 0; i<b.length; i++)
-       	   {
-			for(int i = y; i<a.getSize(); i++) 
-                       {
-			for(int j = 0; j<a.getSize(); j++)
-			{
-			   if(b[y+j][x] == true)
-				return false;
-			}
-                       }
-			return true;
-	       	}
-		else{
-			for(int i = 0; i<a.getSize(); i++)
-			for(int j = 0; j<b.length; j++)
-			 {
-				 System.out.print(b[i][j] + " | ");
-			 }
-			System.out.println();
-		}		
-	}
 	
 	public void printLot()
 	{
