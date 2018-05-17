@@ -1,6 +1,6 @@
 public interface Vehicle
 { 
- void move(int spaces, String direction);
+ void move(int spaces);
 
 /**
  * @param spaces Vehicle object will move

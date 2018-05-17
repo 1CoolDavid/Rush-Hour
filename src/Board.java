@@ -1,13 +1,16 @@
 import java.util.ArrayList;
 
 public class Board {
-	boolean[][] b;
-	ArrayList<Vehicle> vehicles;
-	int manyCars;
+	private boolean[][] b;
+	private ArrayList<Vehicle> vehicles;
+	private Car redCar;
+	private int manyCars;
 	
 	public Board() {
 		b = new boolean[6][6]; //standard board size 6x6
 		vehicles = new ArrayList<Vehicle>();
+		redCar = new Car(3,0);
+		vehicles.add(redCar); //Player's goal
 		init(); //standard amount of cars.
 	}
 	/*public Board(int size) {
@@ -41,17 +44,17 @@ public class Board {
 		int y = a.getY();
 		if(a.getDirection().equals("VERTICAL"))
 		{
-			for(int i = y; i<a.getSize(); i++)
+			for(int i = 0; i<a.getSize(); i++)
 			{
-			   if(b[i][x] == true)
+			   if(b[y+i][x] == true)
 				return false;
 			}
 			return true;
 		}
 		else{
-			for(int i = x; i<a.getSize(); i++)
+			for(int i = 0; i<a.getSize(); i++)
 			{
-				if(b[y][i] == true){
+				if(b[y][x+i] == true){
 					return false;
 				}
 			}
@@ -72,17 +75,17 @@ public class Board {
 		int y = t.getY();
 		if(t.getDirection().equals("VERTICAL"))
 		{
-			for(int i = y; i<t.getSize(); i++)
+			for(int i = 0; i<t.getSize(); i++)
 			{
-			   if(b[i][x] == true)
+			   if(b[y+i][x] == true)
 				return false;
 			}
 			return true;
 		}
 		else{
-			for(int i = x; i<t.getSize(); i++)
+			for(int i = 0; i<t.getSize(); i++)
 			{
-				if(b[y][i] == true){
+				if(b[y][x+i] == true){
 					return false;
 				}
 			}
@@ -104,16 +107,16 @@ public class Board {
 		}
 		if(a.getDirection().equals("VERTICAL"))
 		{
-			for(int i = a.getY(); i < a.getSize(); i++)
+			for(int i = 0; i < a.getSize(); i++)
 			{
-				b[i][a.getX()] = true; 		   	
+				b[a.getY()+i][a.getX()] = true; 		   	
 			}
 		}
 		else
 		{	
-			for(int i = a.getX(); i < a.getSize(); i++)
+			for(int i = 0; i < a.getSize(); i++)
 			{
-				b[a.getY()][i] = true;
+				b[a.getY()][a.getX()+i] = true;
 			}
 		}
 	}
@@ -132,16 +135,16 @@ public class Board {
 		}
 		if(t.getDirection().equals("VERTICAL"))
 		{
-			for(int i = t.getY(); i < t.getSize(); i++)
+			for(int i = 0; i < t.getSize(); i++)
 			{
-				b[i][t.getX()] = true; 		   	
+				b[t.getY()+i][t.getX()] = true; 		   	
 			}
 		}
 		else
 		{	
 			for(int i = t.getX(); i < t.getSize(); i++)
 			{
-				b[t.getY()][i] = true;
+				b[t.getY()][t.getX()+i] = true;
 			}
 		}
 	}
@@ -193,6 +196,18 @@ public class Board {
 			}
 			   
 		}
+	}
+
+	public void print()
+	{
+	   for(int i = 0; i<b.length; i++)
+		{
+			for(int j = 0; j<b.length; j++)
+			 {
+				 System.out.println(b[i][j]);
+			 }
+			System.out.println();
+		}		
 	}
 
 	/*
