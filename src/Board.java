@@ -28,7 +28,7 @@ public class Board {
 	public void print()
 	{
 	   for(int i = 0; i<b.length; i++)
-		{
+       	   {
 			for(int i = y; i<a.getSize(); i++) 
                        {
 			for(int j = 0; j<a.getSize(); j++)
