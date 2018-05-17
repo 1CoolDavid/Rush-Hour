@@ -79,14 +79,24 @@ public class Board {
 		int y = t.getY();
 		if(t.getDirection().equals("VERTICAL"))
 		{
+                      try //Using try catch because the coordinates are random and we don't want to go off the board
+                      {
 			for(int i = 0; i<t.getSize(); i++)
 			{
-			   if(b[y+i][x] == true)
+			   if(b[y + i][x] == true)
 				return false;
 			}
 			return true;
+                      }
+                      catch(Exception e)
+                      {
+                        return false;
+                      }
 		}
-		else{
+		else
+                {
+                       try
+                       {
 			for(int i = 0; i<t.getSize(); i++)
 			{
 				if(b[y][x+i] == true){
@@ -94,6 +104,12 @@ public class Board {
 				}
 			}
 			return true;
+                       }
+                       catch(Exception e)
+                       {
+                         return false;
+                       }
+                       
 		}
 			
 	}
@@ -111,10 +127,12 @@ public class Board {
 		}
 		if(a.getDirection().equals("VERTICAL"))
 		{
+                      
 			for(int i = 0; i < a.getSize(); i++)
 			{
 				b[a.getY()+i][a.getX()] = true; 		   	
 			}
+                      
 		}
 		else
 		{	
@@ -164,8 +182,8 @@ public class Board {
 		for(int c = 0; c < 5; c ++){
 			//creates random coordinates and size
 			int size = (int)(Math.random()*2); //0 or 1
-			int posx = (int)(Math.random()*(manyCars+1));
-            int posy = (int)(Math.random()*(manyCars+1));
+			int posx = (int)(Math.random()*(b.length));
+            int posy = (int)(Math.random()*(b[0].length));
             if(size == 0) {
                 Car a = new Car(posx, posy);
                 vehicles.add(a);
@@ -200,6 +218,9 @@ public class Board {
 			}
 			   
 		}
+             
+              System.out.println(vehicles.size()); //debugging
+			   
 	}
 
 	public void print()
@@ -208,7 +229,7 @@ public class Board {
 		{
 			for(int j = 0; j<b.length; j++)
 			 {
-				 System.out.println(b[i][j]);
+				 System.out.print(b[i][j] + " ");
 			 }
 			System.out.println();
 		}		
