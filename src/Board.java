@@ -1,220 +1,175 @@
-import java.util.ArrayList;
 
 public class Board {
 	private boolean[][] b;
-	private ArrayList<Vehicle> vehicles;
-	private Car redCar;
 	private int manyCars;
 	
 	public Board() {
 		b = new boolean[6][6]; //standard board size 6x6
-		vehicles = new ArrayList<Vehicle>();
-		redCar = new Car(3,0);
-		vehicles.add(redCar); //Player's goal
-		init(); //standard amount of cars.
+		b[2][0] = true;
+		b[2][1] = true;
 	}
-	/*public Board(int size) {
-		b = new boolean[size][size]; //creates custom size board
-		vehicles = new ArrayList<Vehicle>();
-		init(); //standard amount of cars
-	}
-	public Board(int size, int amount) {
-		b = new boolean[size][size]; //Creates custom size board
-		vehicles = new ArrayList<Vehicle>();
-		init(amount); //how many cars user wants
-	}
-	*/ //Only doing basic board for now
-
 	/**
 	 * @return length of height (and width if square)
 	 */
 	public int getDimensions() {
 		return b.length;
 	}
-
-	/**
-	 * Checks coordinates of object
-	 * True if has valid coordinates, false otherwise
-	 * @param Car a
-	 * @return boolean 
-    */
-	public boolean isntTaken(Car a)
-	{
-		int x = a.getX();
-		int y = a.getY();
-		if(a.getDirection().equals("VERTICAL"))
-		{
-			for(int i = 0; i<a.getSize(); i++)
-			{
-			   if(b[y+i][x] == true)
-				return false;
-			}
-			return true;
-		}
-		else{
-			for(int i = 0; i<a.getSize(); i++)
-			{
-				if(b[y][x+i] == true){
-					return false;
-				}
-			}
-			return true;
-		}
-			
-	}
-
-	/**
-	 * Checks if all coordinates of object Vehicle is valid
-	 * @param Truck t
-	 * @return boolean: true if has valid coordinates, false otherwise
-	 * @see public void place(Vehicle v){...} for usage
-	 */
-	public boolean isntTaken(Truck t)
-	{
-		int x = t.getX();
-		int y = t.getY();
-		if(t.getDirection().equals("VERTICAL"))
-		{
-			for(int i = 0; i<t.getSize(); i++)
-			{
-			   if(b[y+i][x] == true)
-				return false;
-			}
-			return true;
-		}
-		else{
-			for(int i = 0; i<t.getSize(); i++)
-			{
-				if(b[y][x+i] == true){
-					return false;
-				}
-			}
-			return true;
-		}
-			
-	}
-	
-	/** 
-	 * Places vehicle in board 2DArray after verifying coordinates (sets coordinates to true)
-	 * @param Car a
-	 * @see public void init(){...} for usage 
-	 */
-	public void place(Car a)
-	{
-		if(!isntTaken(a))
-		{
-			return;           
-		}
-		if(a.getDirection().equals("VERTICAL"))
-		{
-			for(int i = 0; i < a.getSize(); i++)
-			{
-				b[a.getY()+i][a.getX()] = true; 		   	
-			}
-		}
-		else
-		{	
-			for(int i = 0; i < a.getSize(); i++)
-			{
-				b[a.getY()][a.getX()+i] = true;
-			}
-		}
-	}
-
-	/**
-	 * Places vehicle in board 2DArray after verifying coordinates (sets coordinates to true)
-	 * @param Truck t
-	 * @see public void init(){...} for usage
-	 *
-	 */
-	public void place(Truck t)
-	{
-		if(!isntTaken(t))
-		{
-			return;           
-		}
-		if(t.getDirection().equals("VERTICAL"))
-		{
-			for(int i = 0; i < t.getSize(); i++)
-			{
-				b[t.getY()+i][t.getX()] = true; 		   	
-			}
-		}
-		else
-		{	
-			for(int i = t.getX(); i < t.getSize(); i++)
-			{
-				b[t.getY()][t.getX()+i] = true;
-			}
-		}
-	}
-	
-	/**
-	 * Creates an Arraylist randomly filled with Vehicles
-	 * Places objects into the board
-	 * see full parameter checking with methods public void place(Vehicle v){...}
-	 * and public boolean isntTaken(Vehicle aVehicle){...}   
-	 */
-	public void init(){
-		manyCars = getDimensions();
-		for(int c = 0; c < 5; c ++){
-			//creates random coordinates and size
-			int size = (int)(Math.random()*2); //0 or 1
-			int posx = (int)(Math.random()*(manyCars+1));
-            int posy = (int)(Math.random()*(manyCars+1));
-            if(size == 0) {
-                Car a = new Car(posx, posy);
-                vehicles.add(a);
-            }
-            else {
-                Truck b = new Truck(posx, posy);
-                vehicles.add(b);
-            }
-		}
-		//loops through arraylist to verify and place objects with place(v) method
-		for (Vehicle v : vehicles)
-		{
-			if(v.getDirection() == "VERTICAL")
-			{
-				if(v.getY() >= 0 && v.getY() < manyCars - 1)
-				{
-					if(v.getClass().getSimpleName().equals("Car"))
-					   place((Car)v);
-					else
-					   place((Truck)v);
-				}	
-			}
-			else
-			{
-				if(v.getX() >= 0 && v.getX() < manyCars - 1)
-				{
-					if(v.getClass().getSimpleName().equals("Car"))
-						place((Car)v);
-					else
-						place((Truck)v);
-				}
-			}
-			   
-		}
-	}
-
 	public void print()
 	{
 	   for(int i = 0; i<b.length; i++)
 		{
 			for(int j = 0; j<b.length; j++)
 			 {
-				 System.out.println(b[i][j]);
+				 System.out.print(b[i][j] + " | ");
 			 }
 			System.out.println();
 		}		
 	}
+	public boolean isOpen(Car c)
+	{
+		int x = c.getX();
+		int y = c.getY();
+		if(x < 0 || x > getDimensions()-c.getSize() || y < 0 || y > getDimensions()-c.getSize())
+			return false;
+		if(c.getDirection().equals("VERTICAL"))
+		{
+			for(int i = 0; i < c.getSize(); i++)
+			{
+				if(b[i+y][x] == true)
+				   return false;
+			}
+		}
+		else
+		{
+			for(int i = 0; i < c.getSize(); i++)
+			{
+				if(b[y][i+x] == true)
+				   return false;
+			}
+		}
+		return true;
+	}
 
-	/*
-	public void init(int a){
-		manyCars = getDimensions();
-		//incorporate car creation later
+    public boolean isOpen(Truck t)
+	{
+		int x = t.getX();
+		int y = t.getY();
+		if(x < 0 || x > getDimensions() - t.getSize() || y < 0 || y > getDimensions() - t.getSize())
+			return false;
+		if(t.getDirection().equals("VERTICAL"))
+		{
+			for(int i = 0; i < t.getSize(); i++)
+			{
+				if(b[y+i][x] == true)
+				   return false;
+			}
+		}
+		else
+		{
+			for(int i = 0; i < t.getSize(); i++)
+			{
+				if(b[y][i+x] == true)
+				   return false;
+			}
+		}
+		return true;
+	}
+
+	public boolean add(Car c)
+	{
+		if(c.getDirection().equals("VERTICAL")){
+			int i = 0;
+			while(!(isOpen(c)) && i<getDimensions())
+			{
+				c = new Car(i++,c.getX());
+			}
+			if(i >= getDimensions())
+				return false;
+			for(int j = 0; j < c.getSize(); j++)
+			{
+				b[j+c.getY()][c.getX()] = true;
+			}
+			return true;
+		}
+		else
+		{
+			int i = 0;
+			while(!(isOpen(c)) && i<getDimensions())
+			{
+				c = new Car(c.getY(), i++);
+			}
+			if(i >= getDimensions())
+				return false;
+			for(int j = 0; j < c.getSize(); j++)
+			{
+				b[c.getY()][j+c.getX()] = true;
+			}
+			return true;
+		}
 		
 	}
-	*/ //maybe later if we do more than the standard
+
+	public boolean add(Truck t)
+	{
+		if(t.getDirection().equals("VERTICAL")){
+			int i = 0;
+			while(!(isOpen(t)) && i<getDimensions())
+			{
+				t = new Truck(i++,t.getX());
+			}
+			if(i >= getDimensions())
+				return false;
+			for(int j = 0; j < t.getSize(); j++)
+			{
+				b[j+t.getY()][t.getX()] = true;
+			}
+			return true;
+		}
+		else
+		{
+			int i = 0;
+			while(!(isOpen(t)) && i<getDimensions())
+			{
+				t = new Truck(t.getY(), i++);
+			}
+			if(i >= getDimensions())
+				return false;
+			for(int j = 0; j < t.getSize(); j++)
+			{
+				b[t.getY()][j+t.getX()] = true;
+			}
+			return true;
+		}
+		
+	}
+
+	public void initRandom(int a){
+		for(int i = 0; i<a; i++)
+		{
+			int choose = (int)(Math.random()*2);
+			if(choose == 0)
+			{	
+				Car addition;
+				int x = (int)(Math.random()*getDimensions());
+				int y = (int)(Math.random()*getDimensions());
+				addition = new Car(x,y);
+				while(x == 3 && addition.getDirection().equals("HORIZONTAL"))
+					x = (int)(Math.random()*getDimensions());
+				addition = new Car(x,y);	
+				add(addition);
+			}
+			else
+			{
+				Truck addition = new Truck(0, 3);
+				int x = (int)(Math.random()*getDimensions());
+				int y = (int)(Math.random()*getDimensions());
+				addition = new Truck(x,y);
+				while(x == 3 && addition.getDirection().equals("HORIZONTAL"))
+					x = (int)(Math.random()*getDimensions());
+				addition = new Truck(x,y);
+				add(addition);
+			}
+		}
+	}
 }
+

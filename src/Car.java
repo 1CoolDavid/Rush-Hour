@@ -15,6 +15,12 @@ public class Car implements Vehicle
   else
     direction = "VERTICAL";
  }
+ public Car(int x, int y, String str) //just in case
+ {
+   X = x;
+   Y = y;
+  direction = str;
+ }
  
  /**
   * Sets the size -_-
