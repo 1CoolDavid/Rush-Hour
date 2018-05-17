@@ -40,6 +40,11 @@ public class Truck implements Vehicle
    return direction;
  }
 
+ public void setDirection(String str)
+ {
+   direction = str;
+ }
+
  /**
   * sets the size of Truck -_-
   * @param s is new size

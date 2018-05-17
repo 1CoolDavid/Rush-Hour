@@ -38,6 +38,11 @@ public class Car implements Vehicle
  {
    return direction;
  }
+
+ public void setDirection(String str)
+ {
+   direction = str;
+ }
  /**
   * @return size of the car
   */
