@@ -1,3 +1,4 @@
+import java.awt.List;
 import java.util.Scanner;
 public class Driver
 {
@@ -5,7 +6,11 @@ public class Driver
  public static void main (String[] args)
  {
   Board b = new Board();
-  b.initRandom(4);
+  b.initRandom(5); //creates 5 + red car.
+  b.print();
+  b.printLot();
+  b.update();
+  b.printLot();
   b.print();
  }
 }

@@ -1,17 +1,26 @@
+import java.util.ArrayList;
+
+import javax.lang.model.util.ElementScanner6;
 
 public class Board {
-	private boolean[][] b;
+	private int[][] b;
 	private int manyCars;
-	
+	private ArrayList<Vehicle> lot;
+
 	public Board() {
-		b = new boolean[6][6]; //standard board size 6x6
-		b[2][0] = true;
-		b[2][1] = true;
+
+		b = new int[6][6]; //standard board size 6x6
+		lot = new ArrayList<Vehicle>();
+		Car red = new Car(0, 2, "HORIZONTAL");
+		lot.add(red);
+		b[2][0] = 1;
+		b[2][1] = 2;
 	}
 	/**
 	 * @return length of height (and width if square)
 	 */
-	public int getDimensions() {
+	public int getDimensions() 
+	{
 		return b.length;
 	}
 	public void print()
@@ -25,6 +34,20 @@ public class Board {
 			System.out.println();
 		}		
 	}
+	
+	public void printLot()
+	{
+		for(int i = 0; i< lot.size(); i++)
+		{
+			if(i == 0)
+			System.out.print("Red car"+ " X: "+ lot.get(i).getX() + " Y: "+lot.get(i).getY()+"| ");
+			else if(lot.get(i).getClass().getSimpleName() == "Car")
+			System.out.print("Car"+ " X: "+ lot.get(i).getX() + " Y: "+lot.get(i).getY()+"| ");
+			else
+			System.out.print("Truck"+ " X: "+ lot.get(i).getX() + " Y: "+lot.get(i).getY()+"| ");
+		}
+		System.out.println();
+	}
 	public boolean isOpen(Car c)
 	{
 		int x = c.getX();
@@ -35,7 +58,7 @@ public class Board {
 		{
 			for(int i = 0; i < c.getSize(); i++)
 			{
-				if(b[i+y][x] == true)
+				if(b[i+y][x] == 1 || b[i+y][x] == 2 || b[i+y][x] == 3 || (i+y == 2 && (x == 0 || x == 1)))
 				   return false;
 			}
 		}
@@ -43,7 +66,7 @@ public class Board {
 		{
 			for(int i = 0; i < c.getSize(); i++)
 			{
-				if(b[y][i+x] == true)
+				if(b[y][x+i] == 1 || b[y][x+i] == 2 || b[y][x+i] == 3 || (i+x == 2 && (x == 0 || x == 1)))
 				   return false;
 			}
 		}
@@ -60,7 +83,7 @@ public class Board {
 		{
 			for(int i = 0; i < t.getSize(); i++)
 			{
-				if(b[y+i][x] == true)
+				if(b[i+y][x] == 1 || b[i+y][x] == 2 || b[i+y][x] == 3 || (i+y == 2 && (x == 0 || x == 1)))
 				   return false;
 			}
 		}
@@ -68,7 +91,7 @@ public class Board {
 		{
 			for(int i = 0; i < t.getSize(); i++)
 			{
-				if(b[y][i+x] == true)
+				if(b[y][x+i] == 1 || b[y][x+i] == 2 || b[y][x+i] == 3 || (i+x == 2 && (x == 0 || x == 1)))
 				   return false;
 			}
 		}
@@ -85,9 +108,10 @@ public class Board {
 			}
 			if(i >= getDimensions())
 				return false;
+			lot.add(c);
 			for(int j = 0; j < c.getSize(); j++)
 			{
-				b[j+c.getY()][c.getX()] = true;
+				b[j+c.getY()][c.getX()] = j+1;
 			}
 			return true;
 		}
@@ -100,9 +124,10 @@ public class Board {
 			}
 			if(i >= getDimensions())
 				return false;
+			lot.add(c);
 			for(int j = 0; j < c.getSize(); j++)
 			{
-				b[c.getY()][j+c.getX()] = true;
+				b[c.getY()][j+c.getX()] = j+1;
 			}
 			return true;
 		}
@@ -119,9 +144,10 @@ public class Board {
 			}
 			if(i >= getDimensions())
 				return false;
+			lot.add(t);
 			for(int j = 0; j < t.getSize(); j++)
 			{
-				b[j+t.getY()][t.getX()] = true;
+				b[j+t.getY()][t.getX()] = j+1;
 			}
 			return true;
 		}
@@ -134,9 +160,10 @@ public class Board {
 			}
 			if(i >= getDimensions())
 				return false;
+			lot.add(t);
 			for(int j = 0; j < t.getSize(); j++)
 			{
-				b[t.getY()][j+t.getX()] = true;
+				b[t.getY()][j+t.getX()] = j+1;
 			}
 			return true;
 		}
@@ -174,5 +201,71 @@ public class Board {
 			}
 		}
 	}
+	//Won't exactly copy... TODO Work on private void place(...){...}
+	private void place(Car a, int k)
+	{
+		int c = 0;
+		if(a.getDirection().equals("VERTICAL"))
+		{
+			for(int i = a.getY(); i<a.getY()+1; i++)
+			{
+				b[i][a.getX()] = ++c;
+			}
+			lot.add(k, a);
+		}
+		else      
+		{
+			for(int i = a.getX(); i<a.getX()+1; i++)
+			{
+				b[a.getY()][i] = ++c;
+			}	
+			lot.add(k, a);
+		}		
+	}
+	private void place(Truck t, int k)
+	{
+		int c = 0;
+		if(t.getDirection().equals("VERTICAL"))
+		{
+			for(int i = t.getY(); i<t.getY() + 2; i++)
+			{
+				b[i][t.getX()] = ++c;
+			}
+			lot.add(k, t);
+		}
+		else      
+		{
+			for(int i = t.getX(); i<t.getX() + 2; i++)
+			{
+				b[t.getY()][i] = ++c;
+				
+			}	
+			lot.add(k, t);
+		}	
+	}
+
+	public Vehicle getVehicle(int index)
+	{
+		return lot.get(index);
+	}
+	public void update()
+	{ //Currently doesn't work; Create method place. More static than the dynamic add. 
+		Board b = new Board();
+		for(int i = 0; i<lot.size(); i++)
+		{
+			if(lot.get(i).getClass().getSimpleName().equals("Car"))
+			{
+				Car addition = (Car)(lot.get(i));
+				lot.remove(i);
+				place(addition, i);
+			}
+			else
+			{
+				Truck addition = (Truck)(lot.get(i));
+				lot.remove(i);
+				place(addition, i);
+			}
+		}
+	}  
 }
 
