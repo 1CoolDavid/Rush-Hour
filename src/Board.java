@@ -41,7 +41,7 @@ public class Board {
 		int y = a.getY();
 		if(a.getDirection().equals("VERTICAL"))
 		{
-			for(int i = y; i<a.getSize(); i++)
+			for(int i = y; i<a.getSize(); i++) 
 			{
 			   if(b[i][x] == true)
 				return false;
