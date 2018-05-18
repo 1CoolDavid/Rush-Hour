@@ -32,6 +32,15 @@ public class Truck implements Vehicle
   return Y;
  }
  
+ public void setX(int a)
+ {
+  X = a;
+ }
+ 
+ public void setY(int a)
+ {
+  Y = a;
+ }
  /**
   * @return direction of Truck
   */

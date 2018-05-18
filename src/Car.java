@@ -67,6 +67,15 @@ public class Car implements Vehicle
   return Y;
  }
  
+ public void setX(int a)
+ {
+  X = a;
+ }
+ 
+ public void setY(int a)
+ {
+  Y = a;
+ }
  /**
   * @param spaces car will move. Changes coordinate accordingly
   */
@@ -81,4 +90,6 @@ public class Car implements Vehicle
     X+=spaces;
   }
  }
+
+ 
 }
