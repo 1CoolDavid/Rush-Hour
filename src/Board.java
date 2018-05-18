@@ -48,3 +48,227 @@ public class Board {
 		}
 		System.out.println();
 	}
+	public boolean isOpen(Car c)
+	{
+		int x = c.getX();
+		int y = c.getY();
+		if(x < 0 || x > getDimensions()-c.getSize() || y < 0 || y > getDimensions()-c.getSize())
+			return false;
+		if(c.getDirection().equals("VERTICAL"))
+		{
+			for(int i = 0; i < c.getSize(); i++)
+			{
+				if(b[i+y][x] == 1 || b[i+y][x] == 2 || b[i+y][x] == 3 || (i+y == 2 && (x == 0 || x == 1)))
+				   return false;
+			}
+		}
+		else
+		{
+			for(int i = 0; i < c.getSize(); i++)
+			{
+				if(b[y][x+i] == 1 || b[y][x+i] == 2 || b[y][x+i] == 3 || (i+x == 2 && (x == 0 || x == 1)))
+				   return false;
+			}
+		}
+		return true;
+	}
+
+    public boolean isOpen(Truck t)
+	{
+		int x = t.getX();
+		int y = t.getY();
+		if(x < 0 || x > getDimensions() - t.getSize() || y < 0 || y > getDimensions() - t.getSize())
+			return false;
+		if(t.getDirection().equals("VERTICAL"))
+		{
+			for(int i = 0; i < t.getSize(); i++)
+			{
+				if(b[i+y][x] == 1 || b[i+y][x] == 2 || b[i+y][x] == 3 || (i+y == 2 && (x == 0 || x == 1)))
+				   return false;
+			}
+		}
+		else
+		{
+			for(int i = 0; i < t.getSize(); i++)
+			{
+				if(b[y][x+i] == 1 || b[y][x+i] == 2 || b[y][x+i] == 3 || (i+x == 2 && (x == 0 || x == 1)))
+				   return false;
+			}
+		}
+		return true;
+	}
+
+	public boolean add(Car c)
+	{
+		if(c.getDirection().equals("VERTICAL")){
+			int i = 0;
+			while(!(isOpen(c)) && i<getDimensions())
+			{
+				c = new Car(i++,c.getX());
+			}
+			if(i >= getDimensions())
+				return false;
+			lot.add(c);
+			for(int j = 0; j < c.getSize(); j++)
+			{
+				b[j+c.getY()][c.getX()] = j+1;
+			}
+			return true;
+		}
+		else
+		{
+			int i = 0;
+			while(!(isOpen(c)) && i<getDimensions())
+			{
+				c = new Car(c.getY(), i++);
+			}
+			if(i >= getDimensions())
+				return false;
+			lot.add(c);
+			for(int j = 0; j < c.getSize(); j++)
+			{
+				b[c.getY()][j+c.getX()] = j+1;
+			}
+			return true;
+		}
+		
+	}
+
+	public boolean add(Truck t)
+	{
+		if(t.getDirection().equals("VERTICAL")){
+			int i = 0;
+			while(!(isOpen(t)) && i<getDimensions())
+			{
+				t = new Truck(i++,t.getX());
+			}
+			if(i >= getDimensions())
+				return false;
+			lot.add(t);
+			for(int j = 0; j < t.getSize(); j++)
+			{
+				b[j+t.getY()][t.getX()] = j+1;
+			}
+			return true;
+		}
+		else
+		{
+			int i = 0;
+			while(!(isOpen(t)) && i<getDimensions())
+			{
+				t = new Truck(t.getY(), i++);
+			}
+			if(i >= getDimensions())
+				return false;
+			lot.add(t);
+			for(int j = 0; j < t.getSize(); j++)
+			{
+				b[t.getY()][j+t.getX()] = j+1;
+			}
+			return true;
+		}
+		
+	}
+
+	public void initRandom(int a){
+		int i = 0;
+		while(i<a)
+		{
+			int choose = (int)(Math.random()*2);
+			if(choose == 0)
+			{	
+				Car addition;
+				int x = (int)(Math.random()*getDimensions());
+				int y = (int)(Math.random()*getDimensions());
+				addition = new Car(x,y);
+				while(x == 3 && addition.getDirection().equals("HORIZONTAL"))
+					x = (int)(Math.random()*getDimensions());
+				addition = new Car(x,y);	
+				if(add(addition))
+					i++;
+			}
+			else
+			{
+				Truck addition = new Truck(0, 3);
+				int x = (int)(Math.random()*getDimensions());
+				int y = (int)(Math.random()*getDimensions());
+				addition = new Truck(x,y);
+				while(x == 3 && addition.getDirection().equals("HORIZONTAL"))
+					x = (int)(Math.random()*getDimensions());
+				addition = new Truck(x,y);
+				if(add(addition))
+					i++;
+			}
+		}
+	}
+	//Won't exactly copy... TODO Work on private void place(...){...}
+	private void place(Car a, int k)
+	{
+		int c = 0;
+		if(a.getDirection().equals("VERTICAL"))
+		{
+			lot.add(k, a);
+			for(int j = 0; j < a.getSize(); j++)
+			{
+				b[j+a.getY()][a.getX()] = j+1;
+			}
+			
+		}
+		else      
+		{
+			lot.add(k, a);
+			for(int j = 0; j<a.getSize(); j++)
+			{
+				b[a.getY()][a.getX()+j] = j+1;
+				
+			}	
+		}		
+	}
+	private void place(Truck t, int k)
+	{
+		int c = 0;
+		if(t.getDirection().equals("VERTICAL"))
+		{
+			lot.add(k, t);
+			for(int j = 0; j < t.getSize(); j++)
+			{
+				b[j+t.getY()][t.getX()] = j+1;
+			}
+		}
+		else      
+		{
+			lot.add(k, t);
+			for(int j = 0; j < t.getSize(); j++)
+			{
+				b[t.getY()][j+t.getX()] = j+1;
+			}
+		}	
+	}
+
+	public Vehicle getVehicle(int index)
+	{
+		return lot.get(index);
+	}
+	public void update()
+	{ 
+		Board b = new Board();
+		for(int i = 0; i<lot.size(); i++)
+		{
+			if(lot.get(i).getClass().getSimpleName().equals("Car"))
+			{
+				Car addition = (Car)(lot.get(i));
+				addition.setDirection(lot.get(i).getDirection());
+				lot.remove(i);
+				place(addition, i);
+			}
+			else
+			{
+				Truck addition = (Truck)(lot.get(i));
+				addition.setDirection(lot.get(i).getDirection());
+				lot.remove(i);
+				place(addition, i);
+			}
+		}
+	}  
+}
+
