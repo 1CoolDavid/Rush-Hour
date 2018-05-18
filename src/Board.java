@@ -330,11 +330,36 @@ public class Board {
             b[r][c + 1] = 0;
             b[r][c + spaces] = 1;
             b[r][c + spaces + 1] = 2;
-          ((Car)v).setX(c + spaces);
+            ((Car)v).setX(c + spaces);
             return true;
            }
+           else
+           {
+            if(spaces >= b.length - r)
+            {
+             System.out.println("Your spaces are too high");
+             return false;
+            }
+            for(int i = r + 2; i <= r + spaces; i++)
+            {
+             if(!(b[i][c] == 0))
+             {
+              System.out.println("Vehicle exists in your way");
+              return false;
+             }
+            }
+           b[r][c] = 0;
+           b[r + 1][c] = 0;
+           b[r][c + spaces] = 1;
+           b[r][c + spaces + 1] = 2;
+           ((Car)v).setX(r + spaces);
+           return true;
+           }
           } 
-         }
+          else if(b[r][c] == 2)
+          {
+           return false;
+          }
          System.out.println("Something else went wrong");
          return false; 
         }
