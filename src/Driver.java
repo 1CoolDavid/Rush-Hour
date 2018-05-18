@@ -12,8 +12,6 @@ public class Driver
   b.update();
   b.printLot();
   b.print();
-  b.move(1, -1);
-  b.move(2, 1);
   b.update();
   b.printLot();
   b.print();

@@ -210,7 +210,7 @@ public class Board {
 			lot.add(k, a);
 			for(int j = 0; j < a.getSize(); j++)
 			{
-				b[j+a.getY()][a.getX()] = j+1;
+				b[a.getY()+j][a.getX()] = j+1;
 			}
 			
 		}
@@ -226,13 +226,12 @@ public class Board {
 	}
 	private void place(Truck t, int k)
 	{
-		int c = 0;
 		if(t.getDirection().equals("VERTICAL"))
 		{
 			lot.add(k, t);
 			for(int j = 0; j < t.getSize(); j++)
 			{
-				b[j+t.getY()][t.getX()] = j+1;
+				b[t.getY()][t.getX()+j] = j+1;
 			}
 		}
 		else      
@@ -240,7 +239,7 @@ public class Board {
 			lot.add(k, t);
 			for(int j = 0; j < t.getSize(); j++)
 			{
-				b[t.getY()][j+t.getX()] = j+1;
+				b[t.getY()+j][t.getX()] = j+1;
 			}
 		}	
 	}
@@ -251,7 +250,7 @@ public class Board {
 	}
 	public void update()
 	{ 
-		Board b= new Board();
+		Board b = new Board();
 		for(int i = 0; i<lot.size(); i++)
 		{
 			if(lot.get(i).getClass().getSimpleName().equals("Car"))
@@ -269,143 +268,5 @@ public class Board {
 				place(addition, i);
 			}
 		}
-	}
-	public void reset()
-	{
-		for(int i = 0; i<getDimensions(); i++)
-		{
-			for(int j = 0; j<getDimensions(); j++)
-			{
-				b[i][j] = 0;
-			}
-		}
-	}
-	public boolean move(int index, int spaces)
-	{
-		if(index < 0 || index >= lot.size())
-			return false;
-		if(lot.get(index).getClass().getSimpleName().equals("Car"))
-		{
-			if(lot.get(index).getDirection().equals("Vertical"))
-			{
-				if(spaces < 0 && lot.get(index).getSize()-1 + lot.get(index).getY() - spaces < getDimensions())
-				{
-					Car test = (Car)(lot.get(index));
-					test.setDirection(lot.get(index).getDirection());
-					test.move(spaces);
-					if(isOpen(test))
-					{
-						lot.set(index, test); //may need to cast
-						return true;
-					}
-					return false;
-				}
-				else if(spaces > 0 && lot.get(index).getY() + spaces < getDimensions())
-				{
-					Car test = (Car)(lot.get(index));
-					test.setDirection(lot.get(index).getDirection());
-					test.move(spaces);
-					if(isOpen(test))
-					{
-						lot.set(index, test); //may need to cast
-						return true;
-					}
-					return false;
-				}
-				else
-					return false;
-			}
-			else
-			{
-				if(spaces < 0 && lot.get(index).getX() - spaces < getDimensions())
-				{
-					Car test = (Car)(lot.get(index));
-					test.setDirection(lot.get(index).getDirection());
-					test.move(spaces);
-					if(isOpen(test))
-					{
-						lot.set(index, test); //may need to cast
-						return true;
-					}
-					return false;
-				}
-				else if(spaces > 0 && lot.get(index).getSize()-1 + lot.get(index).getX() + spaces < getDimensions())
-				{
-					Car test = (Car)(lot.get(index));
-					test.setDirection(lot.get(index).getDirection());
-					test.move(spaces);
-					if(isOpen(test))
-					{
-						lot.set(index, test); //may need to cast
-						return true;
-					}
-					return false;
-				}
-				else
-					return false;
-			}
-		}
-		else     
-		{
-			if(lot.get(index).getDirection().equals("Vertical"))
-			{
-				if(spaces < 0 && lot.get(index).getSize()-1 + lot.get(index).getY() - spaces < getDimensions())
-				{
-					Truck test = (Truck)(lot.get(index));
-					test.setDirection(lot.get(index).getDirection());
-					test.move(spaces);
-					if(isOpen(test))
-					{
-						lot.set(index, test); //may need to cast
-						return true;
-					}
-					return false;
-				}
-				else if(spaces > 0 && lot.get(index).getY() + spaces < getDimensions())
-				{
-					Truck test = (Truck)(lot.get(index));
-					test.setDirection(lot.get(index).getDirection());
-					test.move(spaces);
-					if(isOpen(test))
-					{
-						lot.set(index, test); //may need to cast
-						return true;
-					}
-					return false;
-				}
-				else
-					return false;
-			}
-			else
-			{
-				if(spaces < 0 && lot.get(index).getX() - spaces < getDimensions())
-				{
-					Truck test = (Truck)(lot.get(index));
-					test.setDirection(lot.get(index).getDirection());
-					test.move(spaces);
-					if(isOpen(test))
-					{
-						lot.set(index, test); //may need to cast
-						return true;
-					}
-					return false;
-				}
-				else if(spaces > 0 && lot.get(index).getSize()-1 + lot.get(index).getX() + spaces < getDimensions())
-				{
-					Truck test = (Truck)(lot.get(index));
-					test.setDirection(lot.get(index).getDirection());
-					test.move(spaces);
-					if(isOpen(test))
-					{
-						lot.set(index, test); //may need to cast
-						return true;
-					}
-					return false;
-				}
-				else
-					return false;
-			}
-		}
-		
 	}  
 }
