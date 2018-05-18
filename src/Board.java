@@ -330,6 +330,7 @@ public class Board {
             b[r][c + 1] = 0;
             b[r][c + spaces] = 1;
             b[r][c + spaces + 1] = 2;
+          ((Car)v).setX(c + spaces);
             return true;
            }
           } 
