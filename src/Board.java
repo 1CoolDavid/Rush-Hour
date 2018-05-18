@@ -290,19 +290,36 @@ public class Board {
         
         /**
         * Moves vehicle at position (x, y) 
-        * @param x the x-coordinate of the vehicle to be moved
-        * @param y the y-coordinate of the vehicle to be moved
+        * @param r the row of the vehicle to be moved
+        * @param c the column of the vehicle to be moved
         * @param spaces the number of spaces we want to move
         * @return true if move was successful, false otherwise
         */
-        public boolean move(int x, int y, int spaces)  
+        public boolean move(int r, int r, int spaces) //TODO: Add support for negative values
         {
-         if(b[x][y] == 0)
+         if(spaces == 0) //Not moving at all, always successful
+          return true;
+         if(b[r][c] == 0) //Vehicle doesn't exist at index
           return false;
-         if(b[x][y] == 1)
+         if(b[r][c] == 1) //The index is the head of the vehicle
          {
           Vehicle v = getVehicleByHead(x, y);
-         } 
+          if(v == null)
+           return false;
+          if(v.getClass().simpleName().equals("Car"))
+          {
+           if(v.getDirection().equals("HORIZONTAL")
+           {
+            if(spaces >= b[0].length - c) //Spaces is greater than distance between column index and end
+              return false;
+            b[r][c] = 0;
+            b[r][c + 1] = 0;
+            b[r][c + spaces] = 1;
+            b[r][c + spaces - 1] = 0;
+           }
+          } 
+         }
+         return false; 
         }
 }
 
