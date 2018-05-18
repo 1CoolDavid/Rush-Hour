@@ -278,11 +278,11 @@ public class Board {
         * @see move
         * @return vehicle with head at (x, y)
         */ 
-        public Vehicle getVehicleByHead(int x, int y)
+        public Vehicle getVehicleByHead(int r, int c)
         {
          for(Vehicle v: lot)
          {
-          if(v.getX() == x && v.getY() == y)
+          if(v.getX() == c && v.getY() == r)
            return v;
          }
          return null;
@@ -295,7 +295,7 @@ public class Board {
         * @param spaces the number of spaces we want to move
         * @return true if move was successful, false otherwise
         */
-        public boolean move(int r, int r, int spaces) //TODO: Add support for negative values
+        public boolean move(int r, int c, int spaces) //TODO: Add support for negative values
         {
          if(spaces == 0) //Not moving at all, always successful
           return true;
@@ -303,22 +303,38 @@ public class Board {
           return false;
          if(b[r][c] == 1) //The index is the head of the vehicle
          {
-          Vehicle v = getVehicleByHead(x, y);
+          Vehicle v = getVehicleByHead(r, c);
           if(v == null)
-           return false;
-          if(v.getClass().simpleName().equals("Car"))
           {
-           if(v.getDirection().equals("HORIZONTAL")
+           System.out.println("Couldn't find vehicle you wanted to move");
+           return false;
+          }
+          if(v.getClass().getSimpleName().equals("Car"))
+          {
+           if(v.getDirection().equals("HORIZONTAL"))
            {
-            if(spaces >= b[0].length - c) //Spaces is greater than distance between column index and end
+            if(spaces >= b[0].length - c) 
+            {
+             System.out.println("Your spaces are too high");
+             return false;
+            }
+            for(int i = c + 2; i <= c + spaces; i++)
+            {
+             if(!(b[r][i] == 0))
+             {
+              System.out.println("Vehicle exists in your way");
               return false;
+             }
+            }
             b[r][c] = 0;
             b[r][c + 1] = 0;
             b[r][c + spaces] = 1;
-            b[r][c + spaces - 1] = 0;
+            b[r][c + spaces + 1] = 2;
+            return true;
            }
           } 
          }
+         System.out.println("Something else went wrong");
          return false; 
         }
 }
