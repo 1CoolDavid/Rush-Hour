@@ -267,18 +267,21 @@ public class Board {
 			 }
 			System.out.println();
 			for(int i = a.getY(); i<a.getY()+1; i++)
-			{
-				b[i][a.getX()] = ++c;
-			}
 			lot.add(k, a);
+			for(int j = 0; j < a.getSize(); j++)
+			{
+				b[j+a.getY()][a.getX()] = j+1;
+			}
+			
 		}
 		else      
 		{
-			for(int i = a.getX(); i<a.getX()+1; i++)
-			{
-				b[a.getY()][i] = ++c;
-			}	
 			lot.add(k, a);
+			for(int j = 0; j<a.getSize(); j++)
+			{
+				b[a.getY()][a.getX()+j] = j+1;
+				
+			}	
 		}		
 	}
 	private void place(Truck t, int k)
@@ -286,20 +289,19 @@ public class Board {
 		int c = 0;
 		if(t.getDirection().equals("VERTICAL"))
 		{
-			for(int i = t.getY(); i<t.getY() + 2; i++)
-			{
-				b[i][t.getX()] = ++c;
-			}
 			lot.add(k, t);
+			for(int j = 0; j < t.getSize(); j++)
+			{
+				b[j+t.getY()][t.getX()] = j+1;
+			}
 		}
 		else      
 		{
-			for(int i = t.getX(); i<t.getX() + 2; i++)
-			{
-				b[t.getY()][i] = ++c;
-				
-			}	
 			lot.add(k, t);
+			for(int j = 0; j < t.getSize(); j++)
+			{
+				b[t.getY()][j+t.getX()] = j+1;
+			}
 		}	
 	}
 
@@ -308,19 +310,21 @@ public class Board {
 		return lot.get(index);
 	}
 	public void update()
-	{ //Currently doesn't work; Create method place. More static than the dynamic add. 
+	{ 
 		Board b = new Board();
 		for(int i = 0; i<lot.size(); i++)
 		{
 			if(lot.get(i).getClass().getSimpleName().equals("Car"))
 			{
 				Car addition = (Car)(lot.get(i));
+				addition.setDirection(lot.get(i).getDirection());
 				lot.remove(i);
 				place(addition, i);
 			}
 			else
 			{
 				Truck addition = (Truck)(lot.get(i));
+				addition.setDirection(lot.get(i).getDirection());
 				lot.remove(i);
 				place(addition, i);
 			}
