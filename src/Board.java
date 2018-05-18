@@ -73,7 +73,7 @@ public class Board {
 		return true;
 	}
 
-    public boolean isOpen(Truck t)
+        public boolean isOpen(Truck t)
 	{
 		int x = t.getX();
 		int y = t.getY();
@@ -269,6 +269,40 @@ public class Board {
 				place(addition, i);
 			}
 		}
-	}  
+	}
+        
+        /**
+        * Helper method for move(); returns vehicle with head at coordinates (x, y)
+        * @param x the x-coordinate of the head of the vehicle
+        * @param y the y-coordinate of the head of the vehicle
+        * @see move
+        * @return vehicle with head at (x, y)
+        */ 
+        public Vehicle getVehicleByHead(int x, int y)
+        {
+         for(Vehicle v: lot)
+         {
+          if(v.getX() == x && v.getY() == y)
+           return v;
+         }
+         return null;
+        }
+        
+        /**
+        * Moves vehicle at position (x, y) 
+        * @param x the x-coordinate of the vehicle to be moved
+        * @param y the y-coordinate of the vehicle to be moved
+        * @param spaces the number of spaces we want to move
+        * @return true if move was successful, false otherwise
+        */
+        public boolean move(int x, int y, int spaces)  
+        {
+         if(b[x][y] == 0)
+          return false;
+         if(b[x][y] == 1)
+         {
+          Vehicle v = getVehicleByHead(x, y);
+         } 
+        }
 }
 
