@@ -48,6 +48,8 @@ public class Board {
 		}
 		System.out.println();
 	}
+
+
 	public boolean isOpen(Car c)
 	{
 		int x = c.getX();
@@ -131,7 +133,7 @@ public class Board {
 			}
 			return true;
 		}
-		
+
 	}
 
 	public boolean add(Truck t)
@@ -167,7 +169,7 @@ public class Board {
 			}
 			return true;
 		}
-		
+
 	}
 
 	public void initRandom(int a){
@@ -176,14 +178,14 @@ public class Board {
 		{
 			int choose = (int)(Math.random()*2);
 			if(choose == 0)
-			{	
+			{
 				Car addition;
 				int x = (int)(Math.random()*getDimensions());
 				int y = (int)(Math.random()*getDimensions());
 				addition = new Car(x,y);
 				while(x == 3 && addition.getDirection().equals("HORIZONTAL"))
 					x = (int)(Math.random()*getDimensions());
-				addition = new Car(x,y);	
+				addition = new Car(x,y);
 				if(add(addition))
 					i++;
 			}
@@ -212,17 +214,17 @@ public class Board {
 			{
 				b[j+a.getY()][a.getX()] = j+1;
 			}
-			
+
 		}
-		else      
+		else
 		{
 			lot.add(k, a);
 			for(int j = 0; j<a.getSize(); j++)
 			{
 				b[a.getY()][a.getX()+j] = j+1;
-				
-			}	
-		}		
+
+			}
+		}
 	}
 	private void place(Truck t, int k)
 	{
@@ -235,14 +237,14 @@ public class Board {
 				b[j+t.getY()][t.getX()] = j+1;
 			}
 		}
-		else      
+		else
 		{
 			lot.add(k, t);
 			for(int j = 0; j < t.getSize(); j++)
 			{
 				b[t.getY()][j+t.getX()] = j+1;
 			}
-		}	
+		}
 	}
 
 	public Vehicle getVehicle(int index)
@@ -250,7 +252,7 @@ public class Board {
 		return lot.get(index);
 	}
 	public void update()
-	{ 
+	{
 		Board b = new Board();
 		for(int i = 0; i<lot.size(); i++)
 		{
@@ -270,14 +272,14 @@ public class Board {
 			}
 		}
 	}
-        
+
         /**
         * Helper method for move(); returns vehicle with head at coordinates (x, y)
-        * @param x the x-coordinate of the head of the vehicle
-        * @param y the y-coordinate of the head of the vehicle
-        * @see move
+        * @param r the x-coordinate of the head of the vehicle
+        * @param c the y-coordinate of the head of the vehicle
+        * @see move()
         * @return vehicle with head at (x, y)
-        */ 
+        */
         public Vehicle getVehicleByHead(int r, int c)
         {
          for(Vehicle v: lot)
@@ -287,81 +289,130 @@ public class Board {
          }
          return null;
         }
-        
+
         /**
-        * Moves vehicle at position (x, y) 
+        * Moves vehicle at position (x, y)
         * @param r the row of the vehicle to be moved
         * @param c the column of the vehicle to be moved
         * @param spaces the number of spaces we want to move
         * @return true if move was successful, false otherwise
         */
-        public boolean move(int r, int c, int spaces) //TODO: Add support for negative values
-        {
-         if(spaces == 0) //Not moving at all, always successful
-          return true;
-         if(b[r][c] == 0) //Vehicle doesn't exist at index
-          return false;
-         if(b[r][c] == 1) //The index is the head of the vehicle
-         {
-          Vehicle v = getVehicleByHead(r, c);
-          if(v == null)
-          {
-           System.out.println("Couldn't find vehicle you wanted to move");
-           return false;
-          }
-          if(v.getClass().getSimpleName().equals("Car"))
-          {
-           if(v.getDirection().equals("HORIZONTAL"))
-           {
-            if(spaces >= b[0].length - c) 
-            {
-             System.out.println("Your spaces are too high");
-             return false;
-            }
-            for(int i = c + 2; i <= c + spaces; i++)
-            {
-             if(!(b[r][i] == 0))
-             {
-              System.out.println("Vehicle exists in your way");
-              return false;
-             }
-            }
-            b[r][c] = 0;
-            b[r][c + 1] = 0;
-            b[r][c + spaces] = 1;
-            b[r][c + spaces + 1] = 2;
-            ((Car)v).setX(c + spaces);
-            return true;
-           }
-           else
-           {
-            if(spaces >= b.length - r)
-            {
-             System.out.println("Your spaces are too high");
-             return false;
-            }
-            for(int i = r + 2; i <= r + spaces; i++)
-            {
-             if(!(b[i][c] == 0))
-             {
-              System.out.println("Vehicle exists in your way");
-              return false;
-             }
-            }
-           b[r][c] = 0;
-           b[r + 1][c] = 0;
-           b[r][c + spaces] = 1;
-           b[r][c + spaces + 1] = 2;
-           ((Car)v).setX(r + spaces);
-           return true;
-           }
-          } 
-          else if(b[r][c] == 2)
-          {
-           return false;
-          }
-         System.out.println("Something else went wrong");
-         return false; 
-        }
+        public boolean move(int r, int c, int spaces) //TODO: Add support for trucks
+		{
+			if (spaces == 0) //Not moving at all, always successful
+				return true;
+			if (b[r][c] == 0) //Vehicle doesn't exist at index
+				return false;
+			if (b[r][c] == 1) //The index is the head of the vehicle
+			{
+				Vehicle v = getVehicleByHead(r, c);
+				if (v == null) {
+					System.out.println("Couldn't find vehicle you wanted to move");
+					return false;
+				}
+				if (v.getClass().getSimpleName().equals("Car"))
+				{
+					if (v.getDirection().equals("HORIZONTAL"))
+					{
+						if (spaces >= b[0].length - c)
+						{
+							System.out.println("Your spaces are too high");
+							return false;
+						}
+						for (int i = c + 2; i <= c + spaces; i++)
+						{
+							if (!(b[r][i] == 0))
+							{
+								System.out.println("Vehicle exists in your way");
+								return false;
+							}
+						}
+						b[r][c] = 0;
+						b[r][c + 1] = 0;
+						b[r][c + spaces] = 1;
+						b[r][c + spaces + 1] = 2;
+						((Car) v).setX(c + spaces);
+						return true;
+					}
+					else
+					{
+						if (spaces >= b.length - r)
+						{
+							System.out.println("Your spaces are too high");
+							return false;
+						}
+						for (int i = r + 2; i <= r + spaces; i++)
+						{
+							if (!(b[i][c] == 0)) {
+								System.out.println("Vehicle exists in your way");
+								return false;
+							}
+						}
+						b[r][c] = 0;
+						b[r + 1][c] = 0;
+						b[r + spaces][c] = 1;
+						b[r + spaces + 1][c] = 2;
+						((Car) v).setY(r + spaces);
+						return true;
+					}
+				}
+				else
+				{
+					if (v.getDirection().equals("HORIZONTAL"))
+					{
+						if (spaces >= b[0].length - c - 1)
+						{
+							System.out.println("Your spaces are too high");
+							return false;
+						}
+						for (int i = c + 3; i <= c + spaces; i++)
+						{
+							if (!(b[r][i] == 0))
+							{
+								System.out.println("Vehicle exists in your way");
+								return false;
+							}
+						}
+						b[r][c] = 0;
+						b[r][c + 1] = 0;
+						b[r][c + 2] = 0;
+						b[r][c + spaces] = 1;
+						b[r][c + spaces + 1] = 2;
+						b[r][c + spaces + 2] = 3;
+						((Truck) v).setX(r + spaces);
+						return true;
+					}
+					else
+					{
+						if (spaces >= b.length - r - 1)
+						{
+							System.out.println("Your spaces are too high");
+							return false;
+						}
+						for (int i = r + 3; i <= r + spaces; i++)
+						{
+							if (!(b[i][c] == 0))
+							{
+								System.out.println("Vehicle exists in your way");
+								return false;
+							}
+						}
+						b[r][c] = 0;
+						b[r + 1][c] = 0;
+						b[r + 2][c] = 0;
+						b[r + spaces][c] = 1;
+						b[r + spaces + 1][c] = 2;
+						b[r + spaces + 2][c] = 3;
+						((Truck)v).setY(r + spaces);
+						return true;
+					}
+				}
+			}
+			else if (b[r][c] == 2)
+			{
+
+			}
+			return false;
+		}
 }
 
