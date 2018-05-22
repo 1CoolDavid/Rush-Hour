@@ -55,83 +55,91 @@ public class Board {
 	{
 		int x = c.getX();
 		int y = c.getY();
-		if(x < 0 || x > getDimensions()-c.getSize() || y < 0 || y > getDimensions()-c.getSize())
+		if(x < 0 || x > getDimensions()|| y < 0 || y > getDimensions())
 			return false;
 		if(c.getDirection().equals("VERTICAL"))
 		{
-			for(int i = 0; i < c.getSize(); i++)
-			{
-				if(b[i+y][x] == 1 || b[i+y][x] == 2 || b[i+y][x] == 3 || (i+y == 2 && (x == 0 || x == 1)))
-				   return false;
-			}
+			if(y < 0 || y >= getDimensions() -1)
+				return false;
+			if(!(b[x][y] == 0))
+				return false;
+			if(!(b[x][y+1] ==0))
+				return false;
+			return true;
 		}
 		else
 		{
-			for(int i = 0; i < c.getSize(); i++)
-			{
-				if(b[y][x+i] == 1 || b[y][x+i] == 2 || b[y][x+i] == 3 || (i+x == 2 && (x == 0 || x == 1)))
-				   return false;
-			}
-		}
-		return true;
+			if( x< 0 || x >= getDimensions() -1)
+				return false;
+			if(!(b[x][y]==0))
+				return false;
+			if(!(b[x+1][y]==0))
+				return false;
+			return true;
+		}	
 	}
 
         public boolean isOpen(Truck t)
 	{
 		int x = t.getX();
 		int y = t.getY();
-		if(x < 0 || x > getDimensions() - t.getSize() || y < 0 || y > getDimensions() - t.getSize())
+		if(x < 0 || x > getDimensions() || y < 0|| y > getDimensions())
 			return false;
 		if(t.getDirection().equals("VERTICAL"))
 		{
-			for(int i = 0; i < t.getSize(); i++)
-			{
-				if(b[i+y][x] == 1 || b[i+y][x] == 2 || b[i+y][x] == 3 || (i+y == 2 && (x == 0 || x == 1)))
-				   return false;
-			}
+			if(y < 0 || y >= getDimensions() - 2)
+				return false;
+			if(!(b[x][y] == 0))
+				return false;
+			if(!(b[x][y+1] ==0))
+				return false;
+			if(!(b[x][y+2] ==0))
+				return false;
+			return true;
 		}
 		else
 		{
-			for(int i = 0; i < t.getSize(); i++)
-			{
-				if(b[y][x+i] == 1 || b[y][x+i] == 2 || b[y][x+i] == 3 || (i+x == 2 && (x == 0 || x == 1)))
-				   return false;
-			}
+			if(x < 0 || x >= getDimensions() -2)
+				return false;
+			if(!(b[x][y]==0))
+				return false;
+			if(!(b[x+1][y]==0))
+				return false;
+			if(!(b[x+2][y]==0))
+				return false;
+			return true;
 		}
-		return true;
 	}
 
 	public boolean add(Car c)
 	{
+		int x = c.getX();
+		int y = c.getY();
 		if(c.getDirection().equals("VERTICAL")){
 			int i = 0;
-			while(!(isOpen(c)) && i<getDimensions())
+			while(i<getDimensions()-1 && !(isOpen(c)))
 			{
-				c = new Car(i++,c.getX());
+				c = new Car(i++,x);
 			}
 			if(i >= getDimensions())
 				return false;
 			lot.add(c);
-			for(int j = 0; j < c.getSize(); j++)
-			{
-				b[j+c.getY()][c.getX()] = j+1;
-			}
+			b[c.getY()][c.getX()] = 1;
+			b[c.getY() + 1][c.getX()] = 2;
 			return true;
 		}
 		else
 		{
 			int i = 0;
-			while(!(isOpen(c)) && i<getDimensions())
+			while(i<getDimensions()-1 && !(isOpen(c)))
 			{
-				c = new Car(c.getY(), i++);
+				c = new Car(y, i++);
 			}
 			if(i >= getDimensions())
 				return false;
 			lot.add(c);
-			for(int j = 0; j < c.getSize(); j++)
-			{
-				b[c.getY()][j+c.getX()] = j+1;
-			}
+			b[c.getY()][c.getX()] = 1;
+			b[c.getY()][c.getX()+1] = 2;
 			return true;
 		}
 
@@ -139,35 +147,35 @@ public class Board {
 
 	public boolean add(Truck t)
 	{
+		int x = t.getX();
+		int y = t.getY();
 		if(t.getDirection().equals("VERTICAL")){
 			int i = 0;
-			while(!(isOpen(t)) && i<getDimensions())
+			while(i<getDimensions()-2 && !(isOpen(t)))
 			{
-				t = new Truck(i++,t.getX());
+				t = new Truck(i++, x);
 			}
 			if(i >= getDimensions())
 				return false;
 			lot.add(t);
-			for(int j = 0; j < t.getSize(); j++)
-			{
-				b[j+t.getY()][t.getX()] = j+1;
-			}
+			b[t.getY()][x] = 1;
+			b[t.getY()+1][x] = 2;
+			b[t.getY()+2][x] = 3;
 			return true;
 		}
 		else
 		{
 			int i = 0;
-			while(!(isOpen(t)) && i<getDimensions())
+			while(i<getDimensions() - 2 && !(isOpen(t)))
 			{
-				t = new Truck(t.getY(), i++);
+				t = new Truck(y, i++);
 			}
 			if(i >= getDimensions())
 				return false;
 			lot.add(t);
-			for(int j = 0; j < t.getSize(); j++)
-			{
-				b[t.getY()][j+t.getX()] = j+1;
-			}
+			b[y][t.getX()] = 1;
+			b[y][t.getX() + 1] = 2;
+			b[y][t.getX() +2] = 3;
 			return true;
 		}
 
