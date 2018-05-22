@@ -10,9 +10,6 @@ public class Driver
   b.initRandom(5); //creates 5 + red car.
   b.print();
   b.printLot();
-  b.update();
-  b.printLot();
-  b.print();
   Scanner s = new Scanner(System.in);
   System.out.println("Row of vehicle you want to move");
   int r = s.nextInt();
