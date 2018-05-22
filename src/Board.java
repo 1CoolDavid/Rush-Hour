@@ -49,12 +49,12 @@ public class Board {
    return false;
   if (c.getDirection().equals("VERTICAL")) {
    for (int i = 0; i < c.getSize(); i++) {
-    if (b[i + y][x] == 1 || b[i + y][x] == 2 || b[i + y][x] == 3 || (i + y == 2 && (x == 0 || x == 1)))
+    if (b[i + y][x] != 0)
      return false;
    }
   } else {
    for (int i = 0; i < c.getSize(); i++) {
-    if (b[y][x + i] == 1 || b[y][x + i] == 2 || b[y][x + i] == 3 || (i + x == 2 && (x == 0 || x == 1)))
+    if (b[y][x + i] != 0)
      return false;
    }
   }
@@ -68,40 +68,41 @@ public class Board {
    return false;
   if (t.getDirection().equals("VERTICAL")) {
    for (int i = 0; i < t.getSize(); i++) {
-    if (b[i + y][x] == 1 || b[i + y][x] == 2 || b[i + y][x] == 3 || (i + y == 2 && (x == 0 || x == 1)))
+    if (b[i + y][x] != 0)
      return false;
    }
   } else {
    for (int i = 0; i < t.getSize(); i++) {
-    if (b[y][x + i] == 1 || b[y][x + i] == 2 || b[y][x + i] == 3 || (i + x == 2 && (x == 0 || x == 1)))
+    if (b[y][x + i] != 0)
      return false;
    }
   }
   return true;
+  
  }
 
  public boolean add(Car c) {
   if (c.getDirection().equals("VERTICAL")) {
    int i = 0;
-   while (!(isOpen(c)) && i < getDimensions()) {
+   while (!(isOpen(c)) && i < 6) {
     c = new Car(i++, c.getX());
    }
-   if (i >= getDimensions())
+   if (i >= 6)
     return false;
    lot.add(c);
-   for (int j = 0; j < c.getSize(); j++) {
+   for (int j = 0; j < 2; j++) {
     b[j + c.getY()][c.getX()] = j + 1;
    }
    return true;
   } else {
    int i = 0;
-   while (!(isOpen(c)) && i < getDimensions()) {
+   while (!(isOpen(c)) && i < 6) {
     c = new Car(c.getY(), i++);
    }
-   if (i >= getDimensions())
+   if (i >= 6)
     return false;
    lot.add(c);
-   for (int j = 0; j < c.getSize(); j++) {
+   for (int j = 0; j < 2; j++) {
     b[c.getY()][j + c.getX()] = j + 1;
    }
    return true;
@@ -112,30 +113,29 @@ public class Board {
  public boolean add(Truck t) {
   if (t.getDirection().equals("VERTICAL")) {
    int i = 0;
-   while (!(isOpen(t)) && i < getDimensions()) {
+   while (!(isOpen(t)) && i < 6) {
     t = new Truck(i++, t.getX());
    }
-   if (i >= getDimensions())
+   if (i >= 6)
     return false;
    lot.add(t);
-   for (int j = 0; j < t.getSize(); j++) {
+   for (int j = 0; j < 3; j++) {
     b[j + t.getY()][t.getX()] = j + 1;
    }
    return true;
   } else {
    int i = 0;
-   while (!(isOpen(t)) && i < getDimensions()) {
+   while (!(isOpen(t)) && i < 6) {
     t = new Truck(t.getY(), i++);
    }
-   if (i >= getDimensions())
+   if (i >= 6)
     return false;
    lot.add(t);
-   for (int j = 0; j < t.getSize(); j++) {
+   for (int j = 0; j < 3; j++) {
     b[t.getY()][j + t.getX()] = j + 1;
    }
    return true;
   }
-
  }
 
  public void initRandom(int a) { //TODO: Fix Overlap Error
@@ -195,7 +195,7 @@ public class Board {
   * @param spaces the number of spaces we want to move
   * @return true if move was successful, false otherwise
   */
- public boolean move(int r, int c, int spaces) //TODO: Add support for positive vertical Truck and Car movements
+ public boolean move(int r, int c, int spaces) 
   {
    if (spaces == 0) //Not moving at all, always successful
     return true;
@@ -262,7 +262,7 @@ public class Board {
     }
     if(spaces > 0)
     {
-	    for (int i = r + 2; i <= r + spaces; i++) 
+	    for (int i = r-1; i >= r - spaces; i--) 
 	    {
 	      if (!(b[i][c] == 0)) 
 	      {
@@ -272,9 +272,9 @@ public class Board {
       }
       b[r][c] = 0;
       b[r + 1][c] = 0;
-      b[r][c + spaces] = 1;
-      b[r][c + spaces + 1] = 2;
-      ((Car) v).setX(r + spaces);
+      b[r-spaces][c] = 1;
+      b[r-spaces + 1][c] = 2;
+      ((Car) v).setY(r - spaces);
       return true;
     }
     else
@@ -291,7 +291,7 @@ public class Board {
       b[r + 1][c] = 0;
       b[r - spaces][c] = 1;
       b[r - spaces +1][c] = 2;
-      ((Car) v).setY(r + spaces);
+      ((Car) v).setY(r - spaces);
       return true;
     }  
    }
@@ -353,7 +353,7 @@ public class Board {
       }
       if(spaces > 0)
       {
-		    for (int i = r + 3; i <= r + spaces; i++) 
+		    for (int i = r-1; i >= r - spaces; i--) 
 		    {
 			    if (!(b[i][c] == 0)) 
 			    {
@@ -363,10 +363,11 @@ public class Board {
         }
         b[r][c] = 0;
         b[r + 1][c] = 0;
-        b[r][c + spaces] = 1;
-	      b[r][c + spaces + 1] = 2;
-	      b[r][c + spaces +2] = 3;
-        ((Truck) v).setX(r + spaces);
+        b[r + 2][c] = 0;
+        b[r - spaces][c] = 1;
+        b[r - spaces + 1][c] = 2;
+        b[r - spaces + 2][c] = 3;
+        ((Truck) v).setY(r - spaces);
         return true;
       }
       else
