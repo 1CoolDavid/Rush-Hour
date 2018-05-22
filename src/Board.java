@@ -363,5 +363,6 @@ public class Board {
          System.out.println("Something else went wrong");
          return false; 
         }
+    }
 }
 
