@@ -7,9 +7,9 @@ public interface Vehicle
  */
  void move(int spaces);
  
- int getX(); 
+ int getR(); 
 
- int getY();
+ int getC();
 
  String getDirection();
 

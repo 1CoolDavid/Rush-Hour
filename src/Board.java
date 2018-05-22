@@ -5,12 +5,12 @@ import javax.lang.model.util.ElementScanner6;
 
 public class Board {
 	private int[][] b;
-	private int manyCars;
+	private int manCCars;
 	private ArrayList<Vehicle> lot;
 
 	public Board() {
 
-		b = new int[6][6]; //standard board size 6x6
+		b = new int[6][6]; //standard board size 6R6
 		lot = new ArrayList<Vehicle>();
 		Car red = new Car(0, 2, "HORIZONTAL");
 		lot.add(red);
@@ -41,11 +41,11 @@ public class Board {
 		for(int i = 0; i< lot.size(); i++)
 		{
 			if(i == 0)
-			System.out.print("Red car"+ " X: "+ lot.get(i).getX() + " Y: "+lot.get(i).getY()+"| ");
+			System.out.print("Red car"+ " R: "+ lot.get(i).getR() + " C: "+lot.get(i).getC()+"| ");
 			else if(lot.get(i).getClass().getSimpleName() == "Car")
-			System.out.print("Car"+ " X: "+ lot.get(i).getX() + " Y: "+lot.get(i).getY()+"| ");
+			System.out.print("Car"+ " R: "+ lot.get(i).getR() + " C: "+lot.get(i).getC()+"| ");
 			else
-			System.out.print("Truck"+ " X: "+ lot.get(i).getX() + " Y: "+lot.get(i).getY()+"| ");
+			System.out.print("Truck"+ " R: "+ lot.get(i).getR() + " C: "+lot.get(i).getC()+"| ");
 		}
 		System.out.println();
 	}
@@ -53,59 +53,59 @@ public class Board {
 
 	public boolean isOpen(Car c)
 	{
-		int x = c.getX();
-		int y = c.getY();
-		if(x < 0 || x > getDimensions()|| y < 0 || y > getDimensions())
+		int R = c.getR();
+		int C = c.getC();
+		if(R < 0 || R >= getDimensions()|| C < 0 || C >= getDimensions())
 			return false;
 		if(c.getDirection().equals("VERTICAL"))
 		{
-			if(y < 0 || y >= getDimensions() -1)
+			if(C < 0 || C >= getDimensions() -1)
 				return false;
-			if(!(b[x][y] == 0))
+			if(!(b[R][C] == 0))
 				return false;
-			if(!(b[x][y+1] ==0))
+			if(!(b[R + 1][C] ==0))
 				return false;
 			return true;
 		}
 		else
 		{
-			if( x< 0 || x >= getDimensions() -1)
+			if( R< 0 || R >= getDimensions() -1)
 				return false;
-			if(!(b[x][y]==0))
+			if(!(b[R][C]==0))
 				return false;
-			if(!(b[x+1][y]==0))
+			if(!(b[R][C + 1]==0))
 				return false;
 			return true;
 		}	
 	}
 
-        public boolean isOpen(Truck t)
-	{
-		int x = t.getX();
-		int y = t.getY();
-		if(x < 0 || x > getDimensions() || y < 0|| y > getDimensions())
+       public boolean isOpen(Truck t)
+	   {
+		int R = t.getR();
+		int C = t.getC();
+		if(R < 0 || R >= getDimensions() || C < 0|| C >= getDimensions())
 			return false;
 		if(t.getDirection().equals("VERTICAL"))
 		{
-			if(y < 0 || y >= getDimensions() - 2)
+			if(R < 0 || R >= getDimensions() - 2)
 				return false;
-			if(!(b[x][y] == 0))
+			if(!(b[R][C] == 0))
 				return false;
-			if(!(b[x][y+1] ==0))
+			if(!(b[R + 1][C] ==0))
 				return false;
-			if(!(b[x][y+2] ==0))
+			if(!(b[R + 2][C] ==0))
 				return false;
 			return true;
 		}
 		else
 		{
-			if(x < 0 || x >= getDimensions() -2)
+			if(C < 0 || C >= getDimensions() -2)
 				return false;
-			if(!(b[x][y]==0))
+			if(!(b[R][C]==0))
 				return false;
-			if(!(b[x+1][y]==0))
+			if(!(b[R][C + 1]==0))
 				return false;
-			if(!(b[x+2][y]==0))
+			if(!(b[R+2][C + 2]==0))
 				return false;
 			return true;
 		}
@@ -113,19 +113,19 @@ public class Board {
 
 	public boolean add(Car c)
 	{
-		int x = c.getX();
-		int y = c.getY();
+		int R = c.getR();
+		int C = c.getC();
 		if(c.getDirection().equals("VERTICAL")){
 			int i = 0;
 			while(i<getDimensions()-1 && !(isOpen(c)))
 			{
-				c = new Car(i++,x);
+				c = new Car(i++,R);
 			}
 			if(i >= getDimensions())
 				return false;
 			lot.add(c);
-			b[c.getY()][c.getX()] = 1;
-			b[c.getY() + 1][c.getX()] = 2;
+			b[c.getC()][c.getR()] = 1;
+			b[c.getC() + 1][c.getR()] = 2;
 			return true;
 		}
 		else
@@ -133,13 +133,13 @@ public class Board {
 			int i = 0;
 			while(i<getDimensions()-1 && !(isOpen(c)))
 			{
-				c = new Car(y, i++);
+				c = new Car(C, i++);
 			}
 			if(i >= getDimensions())
 				return false;
 			lot.add(c);
-			b[c.getY()][c.getX()] = 1;
-			b[c.getY()][c.getX()+1] = 2;
+			b[c.getC()][c.getR()] = 1;
+			b[c.getC()][c.getR()+1] = 2;
 			return true;
 		}
 
@@ -147,20 +147,20 @@ public class Board {
 
 	public boolean add(Truck t)
 	{
-		int x = t.getX();
-		int y = t.getY();
+		int R = t.getR();
+		int C = t.getC();
 		if(t.getDirection().equals("VERTICAL")){
 			int i = 0;
 			while(i<getDimensions()-2 && !(isOpen(t)))
 			{
-				t = new Truck(i++, x);
+				t = new Truck(i++, R);
 			}
 			if(i >= getDimensions())
 				return false;
 			lot.add(t);
-			b[t.getY()][x] = 1;
-			b[t.getY()+1][x] = 2;
-			b[t.getY()+2][x] = 3;
+			b[t.getC()][R] = 1;
+			b[t.getC()+1][R] = 2;
+			b[t.getC()+2][R] = 3;
 			return true;
 		}
 		else
@@ -168,14 +168,14 @@ public class Board {
 			int i = 0;
 			while(i<getDimensions() - 2 && !(isOpen(t)))
 			{
-				t = new Truck(y, i++);
+				t = new Truck(C, i++);
 			}
 			if(i >= getDimensions())
 				return false;
 			lot.add(t);
-			b[y][t.getX()] = 1;
-			b[y][t.getX() + 1] = 2;
-			b[y][t.getX() +2] = 3;
+			b[C][t.getR()] = 1;
+			b[C][t.getR() + 1] = 2;
+			b[C][t.getR() +2] = 3;
 			return true;
 		}
 
@@ -185,34 +185,34 @@ public class Board {
 		int i = 0;
 		while(i<a)
 		{
-			int choose = (int)(Math.random()*2);
+			int choose = (int)(Math.random()*2); //choosing whether it's a truck or car
 			if(choose == 0)
 			{
 				Car addition;
-				int x = (int)(Math.random()*getDimensions());
-				int y = (int)(Math.random()*getDimensions());
-				addition = new Car(x,y);
-				while(x == 3 && addition.getDirection().equals("HORIZONTAL"))
-					x = (int)(Math.random()*getDimensions());
-				addition = new Car(x,y);
+				int R = (int)(Math.random()*getDimensions());
+				int C = (int)(Math.random()*getDimensions());
+				addition = new Car(R,C);
+				while(R == 3 && addition.getDirection().equals("HORIZONTAL"))
+					R = (int)(Math.random()*getDimensions());
+				addition = new Car(R,C);
 				if(add(addition))
 					i++;
 			}
 			else
 			{
 				Truck addition = new Truck(0, 3);
-				int x = (int)(Math.random()*getDimensions());
-				int y = (int)(Math.random()*getDimensions());
-				addition = new Truck(x,y);
-				while(x == 3 && addition.getDirection().equals("HORIZONTAL"))
-					x = (int)(Math.random()*getDimensions());
-				addition = new Truck(x,y);
+				int R = (int)(Math.random()*getDimensions());
+				int C = (int)(Math.random()*getDimensions());
+				addition = new Truck(R,C);
+				while(R == 3 && addition.getDirection().equals("HORIZONTAL"))
+					R = (int)(Math.random()*getDimensions());
+				addition = new Truck(R,C);
 				if(add(addition))
 					i++;
 			}
 		}
 	}
-	//Won't exactly copy... TODO Work on private void place(...){...}
+	//Won't eRactlC copC... TODO Work on private void place(...){...}
 	private void place(Car a, int k)
 	{
 		int c = 0;
@@ -221,7 +221,7 @@ public class Board {
 			lot.add(k, a);
 			for(int j = 0; j < a.getSize(); j++)
 			{
-				b[j+a.getY()][a.getX()] = j+1;
+				b[j+a.getC()][a.getR()] = j+1;
 			}
 
 		}
@@ -230,7 +230,7 @@ public class Board {
 			lot.add(k, a);
 			for(int j = 0; j<a.getSize(); j++)
 			{
-				b[a.getY()][a.getX()+j] = j+1;
+				b[a.getC()][a.getR()+j] = j+1;
 
 			}
 		}
@@ -243,7 +243,7 @@ public class Board {
 			lot.add(k, t);
 			for(int j = 0; j < t.getSize(); j++)
 			{
-				b[j+t.getY()][t.getX()] = j+1;
+				b[j+t.getC()][t.getR()] = j+1;
 			}
 		}
 		else
@@ -251,14 +251,14 @@ public class Board {
 			lot.add(k, t);
 			for(int j = 0; j < t.getSize(); j++)
 			{
-				b[t.getY()][j+t.getX()] = j+1;
+				b[t.getC()][j+t.getR()] = j+1;
 			}
 		}
 	}
 
-	public Vehicle getVehicle(int index)
+	public Vehicle getVehicle(int indeR)
 	{
-		return lot.get(index);
+		return lot.get(indeR);
 	}
 	public void update()
 	{
@@ -283,24 +283,24 @@ public class Board {
 	}
 
         /**
-        * Helper method for move(); returns vehicle with head at coordinates (x, y)
-        * @param r the x-coordinate of the head of the vehicle
-        * @param c the y-coordinate of the head of the vehicle
+        * Helper method for move(); returns vehicle with head at coordinates (R, C)
+        * @param r the R-coordinate of the head of the vehicle
+        * @param c the C-coordinate of the head of the vehicle
         * @see move()
-        * @return vehicle with head at (x, y)
+        * @return vehicle with head at (r, c)
         */
-        public Vehicle getVehicleByHead(int r, int c)
+        public Vehicle getVehicleBCHead(int r, int c)
         {
          for(Vehicle v: lot)
          {
-          if(v.getX() == c && v.getY() == r)
+          if(v.getR() == r && v.getC() == c)
            return v;
          }
          return null;
         }
 
         /**
-        * Moves vehicle at position (x, y)
+        * Moves vehicle at position (r, c)
         * @param r the row of the vehicle to be moved
         * @param c the column of the vehicle to be moved
         * @param spaces the number of spaces we want to move
@@ -314,10 +314,10 @@ public class Board {
 				return false;
 			if (b[r][c] == 1) //The index is the head of the vehicle
 			{
-				Vehicle v = getVehicleByHead(r, c);
+				Vehicle v = getVehicleBCHead(r, c);
 				if (v == null) 
                                 {
-					System.out.println("Couldn't find vehicle you wanted to move");
+					System.out.println("Couldn't find vehicle Cou wanted to move");
 					return false;
 				}
 				if (v.getClass().getSimpleName().equals("Car"))
@@ -341,21 +341,21 @@ public class Board {
 						b[r][c + 1] = 0;
 						b[r][c + spaces] = 1;
 						b[r][c + spaces + 1] = 2;
-						((Car) v).setX(c + spaces);
+						((Car) v).setC(c + spaces);
 						return true;
 					}
 					else
 					{
 						if (spaces >= b.length - r)
 						{
-							System.out.println("Your spaces are too high");
+							System.out.println("Cour spaces are too high");
 							return false;
 						}
 						for (int i = r + 2; i <= r + spaces; i++)
 						{
 							if (b[i][c] != 0)
                                                         {
-								System.out.println("Vehicle exists in your way");
+								System.out.println("Vehicle eRists in Cour waC");
 								return false;
 							}
 						}
@@ -363,7 +363,7 @@ public class Board {
 						b[r + 1][c] = 0;
 						b[r + spaces][c] = 1;
 						b[r + spaces + 1][c] = 2;
-						((Car) v).setY(r + spaces);
+						((Car) v).setR(r + spaces);
 						return true;
 					}
 				}
@@ -390,7 +390,7 @@ public class Board {
 						b[r][c + spaces] = 1;
 						b[r][c + spaces + 1] = 2;
 						b[r][c + spaces + 2] = 3;
-						((Truck) v).setX(r + spaces);
+						((Truck) v).setC(c + spaces);
 						return true;
 					}
 					else
@@ -404,7 +404,7 @@ public class Board {
 						{
 							if (b[i][c] != 0)
 							{
-								System.out.println("Vehicle exists in your way");
+								System.out.println("Vehicle exists in Cour waC");
 								return false;
 							}
 						}
@@ -414,7 +414,7 @@ public class Board {
 						b[r + spaces][c] = 1;
 						b[r + spaces + 1][c] = 2;
 						b[r + spaces + 2][c] = 3;
-						((Truck)v).setY(r + spaces);
+						((Truck)v).setR(r + spaces);
 						return true;
 					}
 				}

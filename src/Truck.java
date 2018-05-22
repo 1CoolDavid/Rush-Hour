@@ -1,13 +1,13 @@
 public class Truck implements Vehicle
 {
  private int size;
- private int X;
- private int Y;
+ private int R;
+ private int C;
  private String direction;
  public Truck(int X, int Y)
  {
-  this.X = X;
-  this.Y = Y;
+  R = X;
+  C = Y;
   size = 3;
   int rand = (int)(Math.random()*2); //0 or 1 to decide direction
   if(rand == 0)
@@ -19,27 +19,27 @@ public class Truck implements Vehicle
  /**
   * @return X coordinate of Truck
   */
- public int getX()
+ public int getR()
  {
-  return X;
+  return R;
  }
  
  /**
   * @return Y coordinate of Truck
   */
- public int getY()
+ public int getC()
  {
-  return Y;
+  return C;
  }
  
- public void setX(int a)
+ public void setR(int a)
  {
-  X = a;
+  R = a;
  }
  
- public void setY(int a)
+ public void setC(int a)
  {
-  Y = a;
+  C = a;
  }
  /**
   * @return direction of Truck
@@ -75,13 +75,13 @@ public class Truck implements Vehicle
   */
  public void move(int spaces)
  {
-  if(direction.equals("Vertical"))
+  if(direction.equals("VERTICAL"))
   {
-    Y+=spaces;
+    R+=spaces;
   }
   else //"Horizontal"
   {
-    X+=spaces;
+    C+=spaces;
   }
   
  }

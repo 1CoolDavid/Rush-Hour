@@ -1,13 +1,13 @@
 public class Car implements Vehicle
 { 
  private int size;
- private int X;
- private int Y;
+ private int R;
+ private int C;
  private String direction; //Replacement for enum and simpler. Could be boolean/char if needed
- public Car(int X, int Y)
+ public Car(int R, int C)
  {
-  this.X = X;
-  this.Y = Y;
+  this.R = R;
+  this.C = C;
   size = 2;
   int rand = (int)(Math.random()*2); //0 or 1 to decide direction
   if(rand == 0)
@@ -17,8 +17,8 @@ public class Car implements Vehicle
  }
  public Car(int x, int y, String str) //just in case
  {
-   X = x;
-   Y = y;
+   R = x;
+   C = y;
   direction = str;
  }
  
@@ -54,27 +54,27 @@ public class Car implements Vehicle
  /**
   * @return X coordinate of Car
   */
- public int getX()
+ public int getR()
  {
-  return X;
+  return R;
  }
  
  /**
   * @return y coordinate of Car
   */
- public int getY()
+ public int getC()
  {
-  return Y;
+  return C;
  }
  
- public void setX(int a)
+ public void setR(int a)
  {
-  X = a;
+  R = a;
  }
  
- public void setY(int a)
+ public void setC(int a)
  {
-  Y = a;
+  C = a;
  }
  /**
   * @param spaces car will move. Changes coordinate accordingly
@@ -83,11 +83,11 @@ public class Car implements Vehicle
  {
   if(direction.equals("VERTICAL")) //Now checks string
   {
-    Y+=spaces;
+    R+=spaces;
   }
   else //"HORIZONTAL"
   {
-    X+=spaces;
+    C+=spaces;
   }
  }
 
