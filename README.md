@@ -19,8 +19,8 @@ Rush Hour! A puzzle game where the objective is to get the red car out of the bo
 
 ### Executing program
 
-*TODO
-	* GUI Development
+* TODO
+     * GUI Development
 
 ## Help
 
