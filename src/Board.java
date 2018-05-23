@@ -322,7 +322,7 @@ public class Board {
 				Vehicle v = getVehicleByHead(r, c);
 				if (v == null) 
                                 {
-					System.out.println("Couldn't find vehicle Cou wanted to move");
+					System.out.println("Couldn't find vehicle you wanted to move");
 					return false;
 				}
 				if (v.getClass().getSimpleName().equals("Car"))
@@ -345,6 +345,8 @@ public class Board {
                                                     return false;
                                                   }
                                                 }
+                                              if(spaces >= 1)
+                                              {
 						for (int i = c + 2; i <= c + spaces + 1; i++)
 						{
 							if (b[r][i] != 0)
@@ -353,6 +355,18 @@ public class Board {
 								return false;
 							}
 						}
+                                               }
+                                               else
+                                               {
+                                                for(int i = c - 1; i >= c + spaces; i--)
+                                                {
+                                                       if(b[r][i] != 0)
+                                                       { 
+                                                                System.out.println("Vehicle exists in your way");
+                                                                return false;
+                                                       }
+                                                }
+                                               }
 						b[r][c] = 0;
 						b[r][c + 1] = 0;
 						b[r][c + spaces] = 1;
@@ -379,7 +393,8 @@ public class Board {
                                                   }
                                                 }
 
-					 
+					       if(spaces >= 1)
+                                               {
 						for (int i = r + 2; i <= r + spaces + 1; i++)
 						{
 							if (b[i][c] != 0)
@@ -388,6 +403,18 @@ public class Board {
 								return false;
 							}
 						}
+                                               }
+                                               else
+                                               {
+                                                 for(int i = r - 1; i >= r + spaces; i--)
+                                                 {
+                                                       if(b[i][c] != 0)
+                                                       {
+                                                               System.out.println("Vehicle exists in your way");
+                                                               return false;
+                                                       }
+                                                 }
+                                               }
 						b[r][c] = 0;
 						b[r + 1][c] = 0;
 						b[r + spaces][c] = 1;
@@ -416,7 +443,8 @@ public class Board {
                                                     return false;
                                                   }
                                                 }
-
+                                               if(spaces >= 1)
+                                               {
 						for (int i = c + 3; i <= c + spaces + 2; i++)
 						{
 							if (b[r][i] != 0)
@@ -425,6 +453,17 @@ public class Board {
 								return false;
 							}
 						}
+                                               }
+                                               else
+                                               {
+                                                for(int i = c - 1; i >= c + spaces; i--)
+                                                {
+                                                        if(b[r][i] != 0)
+                                                        {
+                                                                System.out.println("Vehicle exists in your way");
+                                                        }
+                                                }
+                                               }
 						b[r][c] = 0;
 						b[r][c + 1] = 0;
 						b[r][c + 2] = 0;
@@ -452,15 +491,28 @@ public class Board {
                                                     return false;
                                                   }
                                                 }
-
+                                               if(spaces >= 1)
+                                               {
 						for (int i = r + 3; i <= r + spaces + 2; i++)
 						{
 							if (b[i][c] != 0)
 							{
-								System.out.println("Vehicle exists in Cour waC");
+								System.out.println("Vehicle exists in your way");
 								return false;
 							}
 						}
+                                               }
+                                               else
+                                               {
+                                                 for(int i = r - 1; i >= r + spaces; i--)
+                                                 {
+                                                        if(b[i][c] != 0)
+                                                        {
+                                                               System.out.println("Vehicle exists in your way");
+                                                               return false;
+                                                        }
+                                                 }
+                                               }
 						b[r][c] = 0;
 						b[r + 1][c] = 0;
 						b[r + 2][c] = 0;
