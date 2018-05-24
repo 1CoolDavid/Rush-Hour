@@ -1,15 +1,11 @@
 # Rush-Hour
 A replication of the popular Rush Hour game made using Java
 
-<<<<<<< HEAD
 Testing branch
-
-=======
->>>>>>> 232bf8a082fa2eee41dbfb31ed91a39e3cc772bb
 
 ## Description
 
-An in-depth paragraph about your project and overview of use.
+Rush Hour! A puzzle game where the objective is to get the red car out of the board by moving other vehicles out of the way.
 
 ## Getting Started
 
@@ -23,16 +19,12 @@ An in-depth paragraph about your project and overview of use.
 
 ### Executing program
 
-TODO
-```
-
-```
+* TODO
+     * GUI Development
 
 ## Help
 
-Coming soon
-```
-```
+Please contact @1CoolDavid - onecooldavid@gmail.com
 
 ## Authors
 
@@ -46,7 +38,6 @@ Contributors names and contact info
 
 * 0.1
     * Initial Release
+* 0.2
+    * Terminal Version
 
-## License
-
-No license currently defined, coming soon.

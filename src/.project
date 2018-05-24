@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
+<<<<<<< HEAD
 	<name>Rush-Hour</name>
+=======
+	<name>src</name>
+>>>>>>> e81f4f3d085ea3ade1eb919838026a0b4caa7332
 	<comment></comment>
 	<projects>
 	</projects>
