@@ -311,42 +311,42 @@ public class Board {
         * @param spaces the number of spaces we want to move
         * @return true if move was successful, false otherwise
         */
-        public boolean move(int r, int c, int spaces) //TODO: Add support for trucks
+    public boolean move(int r, int c, int spaces) 
+	{
+		if (spaces == 0) //Not moving at all, always successful
+			return true;
+		if (b[r][c] == 0) //Vehicle doesn't exist at index
+			return false;
+		if (b[r][c] == 1) //The index is the head of the vehicle
 		{
-			if (spaces == 0) //Not moving at all, always successful
-				return true;
-			if (b[r][c] == 0) //Vehicle doesn't exist at index
+			Vehicle v = getVehicleByHead(r, c);
+			if (v == null) 
+            {
+				System.out.println("Couldn't find vehicle you wanted to move");
 				return false;
-			if (b[r][c] == 1) //The index is the head of the vehicle
+			}
+			if (v.getClass().getSimpleName().equals("Car"))
 			{
-				Vehicle v = getVehicleByHead(r, c);
-				if (v == null) 
-                                {
-					System.out.println("Couldn't find vehicle you wanted to move");
-					return false;
-				}
-				if (v.getClass().getSimpleName().equals("Car"))
+				if (v.getDirection().equals("HORIZONTAL"))
 				{
-					if (v.getDirection().equals("HORIZONTAL"))
-					{
-                                                if(spaces >= 1)
-                                                {
-                                                  if(c + spaces + 1 >= b.length)
-                                                  {
-                                                    System.out.println("Your spaces are too high");
-                                                    return false;
-                                                  }
-                                                }
-                                                else
-                                                {
-                                                  if(c + spaces < 0)
-                                                  {
-                                                    System.out.println("Your spaces are too low");
-                                                    return false;
-                                                  }
-                                                }
-                                              if(spaces >= 1)
-                                              {
+                    if(spaces >= 1)
+                    {
+                        if(c + spaces + 1 >= b.length)
+                        {
+    	                    System.out.println("Your spaces are too high");
+                            return false;
+                        }
+                    }
+                    else
+                    {
+                        if(c + spaces < 0)
+         	            {
+                            System.out.println("Your spaces are too low");
+            	            return false;
+                        }
+                    }
+                    if(spaces >= 1)
+                    {
 						for (int i = c + 2; i <= c + spaces + 1; i++)
 						{
 							if (b[r][i] != 0)
@@ -355,96 +355,95 @@ public class Board {
 								return false;
 							}
 						}
-                                               }
-                                               else
-                                               {
-                                                for(int i = c - 1; i >= c + spaces; i--)
-                                                {
-                                                       if(b[r][i] != 0)
-                                                       { 
-                                                                System.out.println("Vehicle exists in your way");
-                                                                return false;
-                                                       }
-                                                }
-                                               }
-						b[r][c] = 0;
-						b[r][c + 1] = 0;
-						b[r][c + spaces] = 1;
-						b[r][c + spaces + 1] = 2;
-						((Car) v).setX(c + spaces);
-						return true;
-					}
-					else
-					{
-                                                if(spaces >= 1)
-                                                {
-                                                  if(r + spaces + 1 >= b.length)
-                                                  {
-                                                    System.out.println("Your spaces are too high");
-                                                    return false;
-                                                  }
-                                                }
-                                                else
-                                                {
-                                                  if(r + spaces < 0)
-                                                  {
-                                                    System.out.println("Your spaces are too low");
-                                                    return false;
-                                                  }
-                                                }
-
-					       if(spaces >= 1)
-                                               {
+                    }
+                    else
+                    {
+                        for(int i = c - 1; i >= c + spaces; i--)
+                        {
+                            if(b[r][i] != 0)
+                            { 
+                                System.out.println("Vehicle exists in your way");
+                                return false;
+                            }
+                        }
+                    }
+					b[r][c] = 0;
+					b[r][c + 1] = 0;
+					b[r][c + spaces] = 1;
+					b[r][c + spaces + 1] = 2;
+					((Car) v).setX(c + spaces);
+					return true;
+				}
+				else
+				{
+                    if(spaces >= 1)
+                    {
+                        if(r + spaces + 1 >= b.length)
+                        {
+                            System.out.println("Your spaces are too high");
+                            return false;
+                        }
+                    }
+            	    else
+                    {
+                        if(r + spaces < 0)
+                        {
+                            System.out.println("Your spaces are too low");
+                            return false;
+                        }
+                    }
+			       if(spaces >= 1)
+                    {
 						for (int i = r + 2; i <= r + spaces + 1; i++)
 						{
 							if (b[i][c] != 0)
-                                                        {
+                            {
 								System.out.println("Vehicle exists in your way");
 								return false;
 							}
 						}
-                                               }
-                                               else
-                                               {
-                                                 for(int i = r - 1; i >= r + spaces; i--)
-                                                 {
-                                                       if(b[i][c] != 0)
-                                                       {
-                                                               System.out.println("Vehicle exists in your way");
-                                                               return false;
-                                                       }
-                                                 }
-                                               }
-						b[r][c] = 0;
-						b[r + 1][c] = 0;
-						b[r + spaces][c] = 1;
-						b[r + spaces + 1][c] = 2;
-						((Car) v).setY(r + spaces);
-						return true;
-					}
+                    }
+                    else
+                    {
+         	           for(int i = r - 1; i >= r + spaces; i--)
+                       {
+                            if(b[i][c] != 0)
+                            {
+                                System.out.println("Vehicle exists in your way");
+                                return false;
+                            }
+                        }
+                    }
+					b[r][c] = 0;
+					b[r + 1][c] = 0;
+					b[r + spaces][c] = 1;
+					b[r + spaces + 1][c] = 2;
+					((Car) v).setY(r + spaces);
+					return true;
 				}
-				else
+			}
+			else
+			{
+				if (v.getDirection().equals("HORIZONTAL"))
 				{
-					if (v.getDirection().equals("HORIZONTAL"))
-					{
-					        if(spaces >= 1)
-                                                {
-                                                  if(c + spaces + 2 >= b.length)
-                                                  {
-                                                    System.out.println("Your spaces are too high");
-                                                    return false;
-                                                  }
-                                                }
-                                                else
-                                                {
-                                                  if(c + spaces < 0)
-                                                  {
-                                                    System.out.println("Your spaces are too low");
-                                                    return false;
-                                                  }
-                                                }
-                                               if(spaces >= 1)
-                                               {
+			        if(spaces >= 1)
+                    {
+                       if(c + spaces + 2 >= b.length)
+                        {
+                            System.out.println("Your spaces are too high");
+                            return false;
+                        }
+                    }
+                    else
+                    {
+                        if(c + spaces < 0)
+                        {
+                            System.out.println("Your spaces are too low");
+                            return false;
+                        }
+                    }
+                    if(spaces >= 1)
+                    {
 						for (int i = c + 3; i <= c + spaces + 2; i++)
 						{
 							if (b[r][i] != 0)
@@ -453,46 +452,47 @@ public class Board {
 								return false;
 							}
 						}
-                                               }
-                                               else
-                                               {
-                                                for(int i = c - 1; i >= c + spaces; i--)
-                                                {
-                                                        if(b[r][i] != 0)
-                                                        {
-                                                                System.out.println("Vehicle exists in your way");
-                                                        }
-                                                }
-                                               }
-						b[r][c] = 0;
-						b[r][c + 1] = 0;
-						b[r][c + 2] = 0;
-						b[r][c + spaces] = 1;
-						b[r][c + spaces + 1] = 2;
-						b[r][c + spaces + 2] = 3;
-						((Truck) v).setX(c + spaces);
-						return true;
-					}
-					else
-					{
-					        if(spaces >= 1)
-                                                {
-                                                  if(r + spaces + 2 >= b.length)
-                                                  {
-                                                    System.out.println("Your spaces are too high");
-                                                    return false;
-                                                  }
-                                                }
-                                                else
-                                                {
-                                                  if(r + spaces < 0)
-                                                  {
-                                                    System.out.println("Your spaces are too low");
-                                                    return false;
-                                                  }
-                                                }
-                                               if(spaces >= 1)
-                                               {
+                    }
+                    else
+                    {
+                        for(int i = c - 1; i >= c + spaces; i--)
+                        {
+                            if(b[r][i] != 0)
+                            {
+								System.out.println("Vehicle exists in your way");
+								return false;
+                            }
+    					}
+                    }
+					b[r][c] = 0;
+					b[r][c + 1] = 0;
+					b[r][c + 2] = 0;
+					b[r][c + spaces] = 1;
+					b[r][c + spaces + 1] = 2;
+					b[r][c + spaces + 2] = 3;
+					((Truck) v).setX(c + spaces);
+					return true;
+				}
+				else
+				{
+			        if(spaces >= 1)
+                    {
+                        if(r + spaces + 2 >= b.length)
+                        {
+                            System.out.println("Your spaces are too high");
+                            return false;
+                        }
+                    }
+                    else
+                    {
+                        if(r + spaces < 0)
+                        {
+                            System.out.println("Your spaces are too low");
+                            return false;
+                        }
+                    }
+                    if(spaces >= 1)
+                    {
 						for (int i = r + 3; i <= r + spaces + 2; i++)
 						{
 							if (b[i][c] != 0)
@@ -501,33 +501,29 @@ public class Board {
 								return false;
 							}
 						}
-                                               }
-                                               else
-                                               {
-                                                 for(int i = r - 1; i >= r + spaces; i--)
-                                                 {
-                                                        if(b[i][c] != 0)
-                                                        {
-                                                               System.out.println("Vehicle exists in your way");
-                                                               return false;
-                                                        }
-                                                 }
-                                               }
-						b[r][c] = 0;
-						b[r + 1][c] = 0;
-						b[r + 2][c] = 0;
-						b[r + spaces][c] = 1;
-						b[r + spaces + 1][c] = 2;
-						b[r + spaces + 2][c] = 3;
-						((Truck)v).setY(r + spaces);
-						return true;
-					}
+                    }
+                    else
+                    {
+ 	                    for(int i = r - 1; i >= r + spaces; i--)
+                        {
+                            if(b[i][c] != 0)
+                            {
+    	                        System.out.println("Vehicle exists in your way");
+                                return false;
+                            }
+                        }
+                    }
+					b[r][c] = 0;
+					b[r + 1][c] = 0;
+					b[r + 2][c] = 0;
+					b[r + spaces][c] = 1;
+					b[r + spaces + 1][c] = 2;
+					b[r + spaces + 2][c] = 3;
+					((Truck)v).setY(r + spaces);
+					return true;
 				}
 			}
-			else if (b[r][c] == 2)
-			{
-
-			}
-			return false;
 		}
+		return false;
+	}
 }
