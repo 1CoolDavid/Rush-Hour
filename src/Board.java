@@ -100,8 +100,8 @@ public class Board {
 				{
 					addition.setY(y);
 					lot.add(addition);
-					b[y][x] = 1;
-					b[y+1][x] = 2;
+					b[y][x] = 4;
+					b[y+1][x] = 5;
 					return true;
 				}
 				return false;
@@ -148,9 +148,9 @@ public class Board {
 				{
 					addition.setY(y);
 					lot.add(addition);
-					b[y][x] = 1;
-					b[y+1][x] = 2;
-					b[y+2][x] = 3;
+					b[y][x] = 4;
+					b[y+1][x] = 5;
+					b[y+2][x] = 6;
 					return true;
 				}
 				return false;
@@ -272,41 +272,6 @@ public class Board {
 	 * @param c : column of vehicle
 	 * @return correlating vehicle in arraylist 
 	 */
-	public Vehicle findFront(int r, int c)
-	{
-		if(b[r][c] == 0)
-			return null;
-		if(b[r][c] == 1)
-			return getVehicleByHead(r, c);
-		if(b[r][c] == 2)
-		{
-			if(r+1 < 6 && b[r+1][c] == 1 && getVehicleByHead(r+1, c).getDirection().equals("VERTICAL"))
-				return getVehicleByHead(r+1, c);
-			if(r-1 > 0 && b[r-1][c] == 1 && getVehicleByHead(r-1, c).getDirection().equals("VERTICAL"))
-				return getVehicleByHead(r-1, c);
-			if(c+1 < 6 && b[r][c+1] == 1 && getVehicleByHead(r, c+1).getDirection().equals("HORIZONTAL"))
-				return getVehicleByHead(r, c+1);
-			if(c-1 > 0 && b[r][c-1] == 1 && getVehicleByHead(r, c-1).getDirection().equals("HORIZONTAL"))
-				return getVehicleByHead(r, c-1);
-			System.out.println("This shouldn't happen");
-			return null;
-		}
-		else
-		{
-			if(r+2 < 6 && b[r+2][c] == 1 && getVehicleByHead(r+2, c).getDirection().equals("VERTICAL"))
-				return getVehicleByHead(r+2, c);
-			if(r-2 > 0 && b[r-2][c] == 1 && getVehicleByHead(r-2, c).getDirection().equals("VERTICAL"))
-				return getVehicleByHead(r-2, c);
-			if(c+2 < 6 && b[r][c+2] == 1 && getVehicleByHead(r, c+2).getDirection().equals("HORIZONTAL"))
-				return getVehicleByHead(r, c+2);
-			if(c-2 > 0 && b[r][c-2] == 1 && getVehicleByHead(r, c-2).getDirection().equals("HORIZONTAL"))
-				return getVehicleByHead(r, c-2);
-			System.out.println("This shouldn't happen either");
-			return null;
-		}
-
-
-	}
 
 	/**
 	 * Moves vehicle at position (r, c)
@@ -321,7 +286,7 @@ public class Board {
 			return true;
 		if (b[r][c] == 0) //Vehicle doesn't exist at index
 			return false;
-		if (b[r][c] == 1) //The index is the head of the vehicle
+		if (b[r][c] == 1 || b[r][c] == 4) //The index is the head of the vehicle
 		{
 			Vehicle v = getVehicleByHead(r, c);
 			if (v == null) 
@@ -420,8 +385,8 @@ public class Board {
 					}
 					b[r][c] = 0;
 					b[r + 1][c] = 0;
-					b[r + spaces][c] = 1;
-					b[r + spaces + 1][c] = 2;
+					b[r + spaces][c] = 4;
+					b[r + spaces + 1][c] = 5;
 					((Car) v).setY(r + spaces);
 					return true;
 				}
@@ -520,9 +485,9 @@ public class Board {
 					b[r][c] = 0;
 					b[r + 1][c] = 0;
 					b[r + 2][c] = 0;
-					b[r + spaces][c] = 1;
-					b[r + spaces + 1][c] = 2;
-					b[r + spaces + 2][c] = 3;
+					b[r + spaces][c] = 4;
+					b[r + spaces + 1][c] = 5;
+					b[r + spaces + 2][c] = 6;
 					((Truck)v).setY(r + spaces);
 					return true;
 				}

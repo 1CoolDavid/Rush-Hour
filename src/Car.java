@@ -3,9 +3,11 @@ public class Car implements Vehicle
  private int size;
  private int X;
  private int Y;
+ private String color;
  private String direction; //Replacement for enum and simpler. Could be boolean/char if needed
  public Car(int X, int Y)
  {
+  color = "grey";
   this.X = X;
   this.Y = Y;
   size = 2;
@@ -17,6 +19,7 @@ public class Car implements Vehicle
  }
  public Car(int x, int y, String str) //just in case
  {
+   color = "red";
    X = x;
    Y = y;
   direction = str;
@@ -29,6 +32,16 @@ public class Car implements Vehicle
  public void setSize(int s)
  { 
    size = s; 
+ }
+
+ public String getColor()
+ {
+   return color;
+ }
+
+ public void setColor(String c)
+ {
+   color = c;
  }
 
  /**

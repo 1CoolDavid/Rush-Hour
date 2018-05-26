@@ -3,9 +3,11 @@ public class Truck implements Vehicle
  private int size;
  private int X;
  private int Y;
+ private String color;
  private String direction;
  public Truck(int X, int Y)
  {
+  color = "grey";
   this.X = X;
   this.Y = Y;
   size = 3;
@@ -68,6 +70,16 @@ public class Truck implements Vehicle
  public int getSize()
  {
    return size;
+ }
+
+ public String getColor()
+ {
+   return color;
+ }
+
+ public void setColor(String c)
+ {
+   color = c;
  }
 
  /**

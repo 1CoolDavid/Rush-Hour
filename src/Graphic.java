@@ -8,7 +8,7 @@ import javax.swing.*;
 public class Graphic 
 {
 	private JFrame frame;
-	private JButton select;
+	private JToggleButton select;
 	private ImageIcon red;
 	private ImageIcon grey;
 	private ImageIcon blue;
@@ -24,7 +24,7 @@ public class Graphic
 		frame.setVisible(true);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setSize(1000, 1000);
-		select = new JButton();
+		select = new JToggleButton();
 		red = new ImageIcon("red.jpg");
 		grey = new ImageIcon("grey.jpg");
 		blue = new ImageIcon("blue.jpg");
@@ -36,7 +36,7 @@ public class Graphic
 		select.setLayout(new GridLayout(6, 6, 5, 5));
 		select.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
 		board = new Board();
-		board.start(5);
+		board.start(7);
 		int[][] b = board.getBoard();
 		for(int r = 0; r < 6; r++)
 		{
@@ -44,34 +44,36 @@ public class Graphic
 			{
 				if(b[r][c] == 0)
 				{
-					JButton button = new JButton("0", grey);
+					JToggleButton button = new JToggleButton("0", grey);
 					select.add(button);
 				}
 				else if(b[r][c] != 0)
 				{
-					if(r == 2 && c == 0)
+					if(b[r][c] == 1 && board.getVehicleByHead(r, c).getColor().equals("red"))
 					{
-						JButton button = new JButton("1", red);
+						JToggleButton button = new JToggleButton("1", red);
 						select.add(button);
-						JButton button1 = new JButton("2", red); 
+						JToggleButton button1 = new JToggleButton("2", red); 
 						select.add(button1);
 						c++;
 					}
 					else
 					{
-						if(b[r][c] == 1 && c<5 && b[r][c+1] == 2)
+						if(b[r][c] == 1)
 						{
-							select.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
-							int z = (int)(Math.random()*4) + 1;
-							if(z == 1)
+							int z = -1;
+							if(board.getVehicleByHead(r,c).getColor().equals("grey"))
+								z = (int)(Math.random()*4) + 1;
+							if(z == 1 || board.getVehicleByHead(r,c).getColor().equals("blue"))
 							{
-								JButton button = new JButton("1", blue);
+								JToggleButton button = new JToggleButton("1", blue);
 								select.add(button);
-								JButton button1 = new JButton("2", blue);
+								board.getVehicleByHead(r, c).setColor("blue");
+								JToggleButton button1 = new JToggleButton("2", blue);
 								select.add(button1);
 								if( c< 4 && b[r][c+2] == 3)
 								{
-									JButton button2 = new JButton("3", blue);
+									JToggleButton button2 = new JToggleButton("3", blue);
 									select.add(button2);
 									c++;
 								}
@@ -79,13 +81,13 @@ public class Graphic
 							}
 							else if(z == 2)
 							{
-								JButton button = new JButton("1", purple);
+								JToggleButton button = new JToggleButton("1", purple);
 								select.add(button);
-								JButton button1 = new JButton("2", purple);
+								JToggleButton button1 = new JToggleButton("2", purple);
 								select.add(button1);
 								if( c< 4 && b[r][c+2] == 3)
 								{
-									JButton button2 = new JButton("3", purple);
+									JToggleButton button2 = new JToggleButton("3", purple);
 									select.add(button2);
 									c++;
 								}
@@ -93,13 +95,13 @@ public class Graphic
 							}
 							else if(z == 3)
 							{
-								JButton button = new JButton("1", green);
+								JToggleButton button = new JToggleButton("1", green);
 								select.add(button);
-								JButton button1 = new JButton("2", green);
+								JToggleButton button1 = new JToggleButton("2", green);
 								select.add(button1);
 								if( c< 4 && b[r][c+2] == 3)
 								{
-									JButton button2 = new JButton("3", green);
+									JToggleButton button2 = new JToggleButton("3", green);
 									select.add(button2);
 									c++;
 								}
@@ -107,31 +109,31 @@ public class Graphic
 							}
 							else
 							{
-								JButton button = new JButton("1", brown);
+								JToggleButton button = new JToggleButton("1", brown);
 								select.add(button);
-								JButton button1 = new JButton("2", brown);
+								JToggleButton button1 = new JToggleButton("2", brown);
 								select.add(button1);
 								if( c< 4 && b[r][c+2] == 3)
 								{
-									JButton button2 = new JButton("3", brown);
+									JToggleButton button2 = new JToggleButton("3", brown);
 									select.add(button2);
 									c++;
 								}
 								c++;
 							}
 						}
-						else
+						else if (b[r][c] == 4 || b[r][c] == 5 || b[r][c] == 6)
 						{
 							String num;
-							if(b[r][c] == 1)
-								num = "1";
-							else if(b[r][c] == 2)
-								num = "2";
+							if(b[r][c] == 4)
+								num = "4";
+							else if(b[r][c] == 5)
+								num = "5";
 							else
 							{
-								num = "3";
+								num = "6";
 							}
-							JButton button = new JButton(num, orange);
+							JToggleButton button = new JToggleButton(num, orange);
 							select.add(button);
 						}
 						

@@ -15,4 +15,8 @@ public interface Vehicle
 
  int getSize();
 
+ void setColor(String c);
+
+ String getColor();
+
 }
