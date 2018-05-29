@@ -266,6 +266,11 @@ public class Board {
 		}
 		return null;
 	}
+	
+	public ArrayList<Vehicle> getLot()
+	{
+		return lot;
+	}
 	/**
 	 * Finds the front of any vehicle in the 2D array
 	 * @param r : row of vehicle
@@ -307,6 +312,7 @@ public class Board {
 
 
 	}
+	
 
 	/**
 	 * Moves vehicle at position (r, c)

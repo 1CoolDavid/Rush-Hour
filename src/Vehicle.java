@@ -14,5 +14,11 @@ public interface Vehicle
  String getDirection();
 
  int getSize();
+ 
+ float getGraphicX();
+ 
+ float getGraphicY();
+ 
+ void graphicMove(int a);
 
 }
