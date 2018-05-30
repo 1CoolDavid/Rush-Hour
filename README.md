@@ -24,7 +24,7 @@ Rush Hour! A puzzle game where the objective is to get the red car out of the bo
 
 ## Help
 
-Please contact @1CoolDavid - onecooldavid@gmail.com
+Please contact @1CoolDavid - onecooldavid@gmail.com or @achandra03 - arnav.99chandra@gmail.com
 
 ## Authors
 
@@ -40,4 +40,6 @@ Contributors names and contact info
     * Initial Release
 * 0.2
     * Terminal Version
+* 0.3
+    * Graphical version
 
