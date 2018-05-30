@@ -132,7 +132,7 @@ public class Game implements Runnable {
 		return false;
 	}
 	
-	public boolean occupied(int x, int y)
+	public boolean forwardOccupied(int x, int y)
 	{
 		for(int i = 0; i < lot.size(); i++)
 		{
@@ -140,31 +140,31 @@ public class Game implements Runnable {
 			if(v.getGraphicX() == clickedOn.getGraphicX() && v.getGraphicY() == clickedOn.getGraphicY())
 				continue;
 				if(v.getClass().getSimpleName().equals("Car") && v.getDirection().equals("HORIZONTAL")
-						&& x >= v.getGraphicX() && x <= v.getGraphicX() + 72
-						&& y >= v.getGraphicY() && y <= v.getGraphicY() + 36)
+						&& x >= v.getGraphicX() && x <= v.getGraphicX() + 71
+						&& y >= v.getGraphicY() && y <= v.getGraphicY() + 35)
 				{
-					System.out.println("Collision detected at x " + x + " and y " + y);
+					//System.out.println("Collision detected at x " + x + " and y " + y + " with horizontal car");
 					return true;
 				}
 				if(v.getClass().getSimpleName().equals("Car") && v.getDirection().equals("VERTICAL")
-						&& x > v.getGraphicX() && x < v.getGraphicX() + 36
-						&& y >= v.getGraphicY() && y <= v.getGraphicY() + 72)
+						&& x >= v.getGraphicX() && x <= v.getGraphicX() + 35
+						&& y >= v.getGraphicY() && y <= v.getGraphicY() + 71)
 				{
-					System.out.println("Collision detected at x " + x + " and y " + y);
+					//System.out.println("Collision detected at x " + x + " and y " + y + " with vertical car");
 					return true;
 				}
 				if(v.getClass().getSimpleName().equals("Truck") && v.getDirection().equals("HORIZONTAL")
-						&& x >= v.getGraphicX() && x <= v.getGraphicX() + 108
-						&& y > v.getGraphicY() && y < v.getGraphicY() + 36)
+						&& x >= v.getGraphicX() && x <= v.getGraphicX() + 107
+						&& y >= v.getGraphicY() && y <= v.getGraphicY() + 35)
 				{
-					System.out.println("Collision detected at x " + x + " and y " + y);
+					//System.out.println("Collision detected at x " + x + " and y " + y + " with horizontal truck");
 					return true;
 				}
 				if(v.getClass().getSimpleName().equals("Truck") && v.getDirection().equals("VERTICAL")
-						&& x > v.getGraphicX() && x < v.getGraphicX() + 36
-						&& y >= v.getGraphicY() && y <= v.getGraphicY() + 108)
+						&& x >= v.getGraphicX() && x <= v.getGraphicX() + 35
+						&& y >= v.getGraphicY() && y <= v.getGraphicY() + 107)
 				{
-					System.out.println("Collision detected at x " + x + " and y " + y);
+					//System.out.println("Collision detected at x " + x + " and y " + y + " with vertical truck");
 					return true;
 				}
 		}
@@ -226,12 +226,12 @@ public class Game implements Runnable {
      	   if(clickedOn.getClass().getSimpleName().equals("Car") && clickedOn.getDirection().equals("HORIZONTAL"))
      	   {
      		   //System.out.println("Car currently clicked on is horizontal");
-     		   if(keyManager.right && !occupied(((int)clickedOn.getGraphicX()) + 72, ((int)clickedOn.getGraphicY())))
+     		   if(keyManager.right && !forwardOccupied(((int)clickedOn.getGraphicX()) + 72, ((int)clickedOn.getGraphicY())))
      		   {
      			  // System.out.println("Right key pressed");
      			   ((Car)clickedOn).graphicMove(36);
      		   }
-     		   else if(keyManager.left && !occupied(((int)clickedOn.getGraphicX()) - 36, ((int)clickedOn.getGraphicY())))
+     		   else if(keyManager.left && !forwardOccupied(((int)clickedOn.getGraphicX()) - 36, ((int)clickedOn.getGraphicY())))
      		   {
      			   ((Car)clickedOn).graphicMove(-36);
      		   }
@@ -239,12 +239,12 @@ public class Game implements Runnable {
      	   else if(clickedOn.getClass().getSimpleName().equals("Car") && clickedOn.getDirection().equals("VERTICAL"))
      	   {
      		   //System.out.println("Car currently clicked on is horizontal");
-     		   if(keyManager.down && !occupied(((int)clickedOn.getGraphicX()), ((int)clickedOn.getGraphicY()) + 72))
+     		   if(keyManager.down && !forwardOccupied(((int)clickedOn.getGraphicX()), ((int)clickedOn.getGraphicY()) + 72))
      		   {
      			  // System.out.println("Right key pressed");
      			   ((Car)clickedOn).graphicMove(36);
      		   }
-     		   else if(keyManager.up && !occupied(((int)clickedOn.getGraphicX()), ((int)clickedOn.getGraphicY()) - 72))
+     		   else if(keyManager.up && !forwardOccupied(((int)clickedOn.getGraphicX()), ((int)clickedOn.getGraphicY()) - 36))
      		   {
      			   ((Car)clickedOn).graphicMove(-36);
      		   }
@@ -252,12 +252,12 @@ public class Game implements Runnable {
      	   else if(clickedOn.getClass().getSimpleName().equals("Truck") && clickedOn.getDirection().equals("HORIZONTAL"))
      	   {
      		   //System.out.println("Car currently clicked on is horizontal");
-     		   if(keyManager.right && !occupied(((int)clickedOn.getGraphicX()) + 108, ((int)clickedOn.getGraphicY())))
+     		   if(keyManager.right && !forwardOccupied(((int)clickedOn.getGraphicX()) + 108, ((int)clickedOn.getGraphicY())))
      		   {
      			  // System.out.println("Right key pressed");
      			   ((Truck)clickedOn).graphicMove(36);
      		   }
-     		   else if(keyManager.left && !occupied(((int)clickedOn.getGraphicX()) - 108, ((int)clickedOn.getGraphicY())))
+     		   else if(keyManager.left && !forwardOccupied(((int)clickedOn.getGraphicX()) - 36, ((int)clickedOn.getGraphicY())))
      		   {
      			   ((Truck)clickedOn).graphicMove(-36);
      		   }
@@ -265,12 +265,12 @@ public class Game implements Runnable {
      	   else if(clickedOn.getClass().getSimpleName().equals("Truck") && clickedOn.getDirection().equals("VERTICAL"))
      	   {
      		   //System.out.println("Car currently clicked on is horizontal");
-     		   if(keyManager.down && !occupied(((int)clickedOn.getGraphicX()), ((int)clickedOn.getGraphicY()) + 108))
+     		   if(keyManager.down && !forwardOccupied(((int)clickedOn.getGraphicX()), ((int)clickedOn.getGraphicY()) + 108))
      		   {
      			  // System.out.println("Right key pressed");
      			   ((Truck)clickedOn).graphicMove(36);
      		   }
-     		   else if(keyManager.up && !occupied(((int)clickedOn.getGraphicX()), ((int)clickedOn.getGraphicY()) - 108))
+     		   else if(keyManager.up && !forwardOccupied(((int)clickedOn.getGraphicX()), ((int)clickedOn.getGraphicY()) - 36))
      		   {
      			   ((Truck)clickedOn).graphicMove(-36);
      		   }
@@ -278,7 +278,7 @@ public class Game implements Runnable {
         }
         if(checkWin())
         {
-        	//System.out.println("You win!");
+        	System.out.println("You win!");
         	//System.exit(0);
         }
 	}
