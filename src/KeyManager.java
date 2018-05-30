@@ -23,7 +23,7 @@ public class KeyManager implements KeyListener
 	@Override
 	public void keyPressed(KeyEvent e) 
 	{
-		   keys[e.getKeyCode()] = true;	
+		   keys[e.getKeyCode()] = true;
 	}
 
 	@Override

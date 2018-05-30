@@ -166,4 +166,10 @@ public class Car implements Vehicle
  {
 	 texture = b;
  }
+ 
+ public boolean equals(Object o)
+ {
+	 Car other = (Car)o;
+	 return this.graphicX == other.graphicX && this.graphicY == other.graphicY;
+ }
 }

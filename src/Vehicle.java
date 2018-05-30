@@ -20,5 +20,7 @@ public interface Vehicle
  float getGraphicY();
  
  void graphicMove(int a);
+ 
+ boolean equals(Object o);
 
 }

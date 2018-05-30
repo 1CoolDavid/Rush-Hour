@@ -160,4 +160,10 @@ public class Truck implements Vehicle
 	 else if(direction.equals("VERTICAL") && graphicY + a >= 0 && graphicY + a <= 108)
 		 graphicY += a;
  }
+ 
+ public boolean equals(Object o)
+ {
+	 Truck other = (Truck)o;
+	 return this.graphicX == other.graphicX && this.graphicY == other.graphicY;
+ }
 }
