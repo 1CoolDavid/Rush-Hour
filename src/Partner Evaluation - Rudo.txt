@@ -1,0 +1,5 @@
+	Arnav and I were great parteners for the project. I worked a lot on the back-end processing code
+while he spent a lot of time creating a GUI and launcher. We both were able to help each other and were 
+extremely effecient in our time well spent and coding. I mainly worked on the methods used for the text
+version of the game with move(), init(), and start() generating proper game boards. Arnav spent majority
+of his time on the GUI setting up pixel measurements and icons to make the game look nice. 
