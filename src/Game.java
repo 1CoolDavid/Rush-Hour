@@ -27,7 +27,7 @@ public class Game implements Runnable {
 	
 	public Board board;
 	public Vehicle clickedOn = null;
-	public ArrayList<Vehicle> lot;;
+	public ArrayList<Vehicle> lot;
 	
 	public Game(String title, int width, int height)
 	{
